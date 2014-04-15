@@ -1,0 +1,23 @@
+{
+    "name": "zenstruck/backup-bundle",
+    "description": "Symfony2 Bundle that wraps backup commands",
+    "keywords": ["symfony2", "bundle", "backup"],
+    "homepage": "http://zenstruck.com/projects/ZenstruckBackupBundle",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Kevin Bond",
+            "email": "kevinbond@gmail.com"
+        }
+    ],
+    "require": {
+        "symfony/framework-bundle": "~2.3",
+        "symfony/process": "~2.3",
+        "symfony/console": "~2.3"
+    },
+    "autoload": {
+        "psr-0": { "Zenstruck\\BackupBundle": "" }
+    },
+    "target-dir": "Zenstruck/BackupBundle"
+}
