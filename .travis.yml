@@ -11,3 +11,6 @@ env:
 
 before_install:
   - composer require --prefer-source symfony/symfony:${SYMFONY_VERSION}
+
+before_script:
+  - mysql -e 'create database zenstruck_backup;'
