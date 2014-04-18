@@ -2,7 +2,7 @@
 
 namespace Zenstruck\BackupBundle\Tests\Source;
 
-use Symfony\Component\HttpKernel\Log\NullLogger;
+use Psr\Log\NullLogger;
 use Zenstruck\BackupBundle\Source\MySqlDumpSource;
 use Zenstruck\BackupBundle\Tests\BaseTest;
 
