@@ -2,7 +2,14 @@
 
 namespace Zenstruck\BackupBundle\Tests;
 
+use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 use Symfony\Component\Filesystem\Filesystem;
+use Zenstruck\BackupBundle\BackupManager;
+use Zenstruck\BackupBundle\Namer\SimpleNamer;
+use Zenstruck\BackupBundle\Tests\Fixtures\NullDestination;
+use Zenstruck\BackupBundle\Tests\Fixtures\NullProcessor;
+use Zenstruck\BackupBundle\Tests\Fixtures\NullSource;
 
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
@@ -19,6 +26,22 @@ abstract class BaseTest extends \PHPUnit_Framework_TestCase
     protected function tearDown()
     {
         $this->removeScratchDir();
+    }
+
+    protected function createNullBackupManager(LoggerInterface $logger = null)
+    {
+        if (!$logger) {
+            $logger = new NullLogger();
+        }
+
+        return new BackupManager(
+            $this->getScratchDir(),
+            new NullProcessor(),
+            new SimpleNamer(),
+            array(new NullSource()),
+            new NullDestination(),
+            $logger
+        );
     }
 
     protected function getFixtureDir()
