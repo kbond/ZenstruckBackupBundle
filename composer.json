@@ -16,6 +16,9 @@
         "symfony/process": "~2.3",
         "symfony/console": "~2.3"
     },
+    "require-dev": {
+        "matthiasnoback/symfony-dependency-injection-test": "~0.4"
+    },
     "autoload": {
         "psr-0": { "Zenstruck\\BackupBundle": "" }
     },

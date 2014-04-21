@@ -1,0 +1,36 @@
+sources:
+    database:
+        mysqldump:
+            database: my_database
+    files:
+        rsync:
+            source: "%kernel.root_dir%/../web/files"
+            additional_options:
+                - --exclude=_cache/
+namers:
+    simple:
+        simple: ~
+    daily:
+        timestamp:
+            format: d
+            prefix: mysite-
+    snapshot:
+        timestamp:
+            prefix: mysite-
+processors:
+    zip: { zip: ~ }
+    gzip: { gzip: ~ }
+destinations:
+    s3:
+        s3cmd:
+            bucket: "s3://foobar/backups"
+    stream:
+        stream:
+            directory: /foo
+profiles:
+    daily:
+        scratch_dir: "%kernel.root_dir%/cache/backup"
+        sources: [database, files]
+        namer: daily
+        processor: zip
+        destination: s3

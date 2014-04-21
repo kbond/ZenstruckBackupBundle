@@ -30,9 +30,10 @@ class ProfileCompilerPass implements CompilerPassInterface
 
         foreach ($taggedServices as $id => $tagAttributes) {
             foreach ($tagAttributes as $attributes) {
+                $alias = empty($attributes['alias']) ? $id : $attributes['alias'];
                 $definition->addMethodCall(
                     'add',
-                    array($attributes['alias'], new Reference($id))
+                    array($alias, new Reference($id))
                 );
             }
         }
