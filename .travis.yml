@@ -9,8 +9,12 @@ env:
   - SYMFONY_VERSION=2.3.*
   - SYMFONY_VERSION=2.4.*
 
-before_install:
-  - composer require --prefer-source symfony/symfony:${SYMFONY_VERSION}
-
 before_script:
+  - composer require --prefer-source symfony/symfony:${SYMFONY_VERSION}
   - mysql -e 'create database zenstruck_backup;'
+
+script: phpunit --coverage-clover=coverage.clover
+
+after_script:
+  - wget https://scrutinizer-ci.com/ocular.phar
+  - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
