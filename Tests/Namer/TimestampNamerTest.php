@@ -26,7 +26,7 @@ class TimestampNamerTest extends \PHPUnit_Framework_TestCase
             array(TimestampNamer::DEFAULT_FORMAT, TimestampNamer::DEFAULT_PREFIX),
             array('d', null),
             array('dm', null),
-            array('s', 'foo-')
+            array('s', 'foo-'),
         );
     }
 }

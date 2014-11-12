@@ -30,7 +30,7 @@ class ProfileCompilerPassTest extends AbstractCompilerPassTestCase
             'add',
             array(
                 'my_profile',
-                new Reference('my_profile')
+                new Reference('my_profile'),
             )
         );
     }
@@ -52,7 +52,7 @@ class ProfileCompilerPassTest extends AbstractCompilerPassTestCase
             'add',
             array(
                 'my_profile_alias',
-                new Reference('my_profile')
+                new Reference('my_profile'),
             )
         );
     }

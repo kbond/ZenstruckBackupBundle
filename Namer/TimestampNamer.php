@@ -26,6 +26,6 @@ class TimestampNamer implements Namer
     {
         $dateTime = new \DateTime();
 
-        return $this->prefix . $dateTime->format($this->format);
+        return $this->prefix.$dateTime->format($this->format);
     }
 }

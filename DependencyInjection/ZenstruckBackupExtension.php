@@ -2,11 +2,11 @@
 
 namespace Zenstruck\BackupBundle\DependencyInjection;
 
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\DefinitionDecorator;
-use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader;
+use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Zenstruck\BackupBundle\DependencyInjection\Factory\Factory;
 
 /**
@@ -93,7 +93,7 @@ class ZenstruckBackupExtension extends Extension
 
             $destinationToAdd = $destinations[$profile['destination']];
 
-            $container->setDefinition(sprintf('zenstruck_backup.manager.%s', $name),new DefinitionDecorator('zenstruck_backup.manager'))
+            $container->setDefinition(sprintf('zenstruck_backup.manager.%s', $name), new DefinitionDecorator('zenstruck_backup.manager'))
                 ->replaceArgument(0, $profile['scratch_dir'])
                 ->replaceArgument(1, $processorToAdd)
                 ->replaceArgument(2, $namerToAdd)
