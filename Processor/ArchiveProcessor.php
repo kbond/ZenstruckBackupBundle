@@ -36,8 +36,9 @@ abstract class ArchiveProcessor implements Processor
 
         $logger->info(sprintf('Archiving files to: %s', $filename));
 
-        $process = ProcessBuilder::create(array($this->command, $this->options, $filename, './'))->getProcess();
-        $process->setWorkingDirectory($scratchDir);
+        $process = ProcessBuilder::create(array($this->command, $this->options, $filename, './'))
+            ->setWorkingDirectory($scratchDir)
+            ->getProcess();
 
         $process->run(
             function ($type, $buffer) use ($logger) {

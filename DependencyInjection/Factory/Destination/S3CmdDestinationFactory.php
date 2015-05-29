@@ -32,6 +32,7 @@ class S3CmdDestinationFactory implements Factory
         $container->setDefinition($id, new DefinitionDecorator('zenstruck_backup.destination.abstract_s3cmd'))
             ->replaceArgument(0, $config['bucket'])
             ->replaceArgument(1, $config['timeout'])
+            ->replaceArgument(2, $config['options'])
         ;
 
         return new Reference($id);
@@ -46,6 +47,9 @@ class S3CmdDestinationFactory implements Factory
             ->children()
                 ->scalarNode('bucket')->isRequired()->example('s3://foobar/backups')->end()
                 ->integerNode('timeout')->defaultValue(S3CmdDestination::DEFAULT_TIMEOUT)->end()
+                ->arrayNode('options')
+                    ->prototype('scalar')->end()
+                ->end()
             ->end()
         ;
     }

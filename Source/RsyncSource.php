@@ -42,12 +42,11 @@ class RsyncSource implements Source
     {
         $logger->info(sprintf('Syncing files from: %s', $this->source));
 
-        $processBuilder = new ProcessBuilder($this->options);
-        $processBuilder->setPrefix('rsync');
-        $processBuilder->add($this->source);
-        $processBuilder->add($scratchDir);
-
-        $process = $processBuilder->getProcess();
+        $process = ProcessBuilder::create($this->options)
+            ->setPrefix('rsync')
+            ->add($this->source)
+            ->add($scratchDir)
+            ->getProcess();
 
         $process->run(
             function ($type, $buffer) use ($logger) {

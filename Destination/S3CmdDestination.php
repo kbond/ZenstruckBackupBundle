@@ -14,15 +14,18 @@ class S3CmdDestination implements Destination
 
     private $bucket;
     private $timeout;
+    private $options;
 
     /**
      * @param string $bucket
      * @param int    $timeout The process timeout in seconds
+     * @param array  $options s3cmd command options
      */
-    public function __construct($bucket, $timeout = self::DEFAULT_TIMEOUT)
+    public function __construct($bucket, $timeout = self::DEFAULT_TIMEOUT, array $options = array())
     {
         $this->bucket = $bucket;
         $this->timeout = $timeout;
+        $this->options = $options;
     }
 
     /**
@@ -34,8 +37,12 @@ class S3CmdDestination implements Destination
 
         $logger->info(sprintf('Uploading %s to: %s', $filename, $destination));
 
-        $process = ProcessBuilder::create(array('s3cmd', 'put', $filename, $destination))->getProcess();
-        $process->setTimeout($this->timeout);
+        $process = ProcessBuilder::create($this->options)
+            ->setPrefix(array('s3cmd', 'put'))
+            ->add($filename)
+            ->add($destination)
+            ->setTimeout($this->timeout)
+            ->getProcess();
 
         $process->run(
             function ($type, $buffer) use ($logger) {

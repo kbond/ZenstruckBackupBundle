@@ -64,6 +64,7 @@
         <service id="zenstruck_backup.destination.abstract_s3cmd" class="Zenstruck\BackupBundle\Destination\S3CmdDestination" abstract="true" public="false">
             <argument /> <!-- bucket -->
             <argument /> <!-- timeout -->
+            <argument /> <!-- options -->
         </service>
     </services>
 </container>
