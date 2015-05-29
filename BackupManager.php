@@ -59,10 +59,15 @@ class BackupManager
 
         $filename = $this->processor->process($this->scratchDir, $this->namer, $this->logger);
 
-        $this->destination->push($filename, $this->logger);
+        try {
+            $this->destination->push($filename, $this->logger);
+        } catch (\Exception $e) {
+            $this->processor->cleanup($filename, $this->logger);
+
+            throw $e;
+        }
 
         $this->processor->cleanup($filename, $this->logger);
-
         $this->logger->info('Done.');
     }
 }
