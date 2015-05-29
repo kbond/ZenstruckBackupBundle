@@ -9,12 +9,13 @@ use Zenstruck\BackupBundle\BackupRegistry;
  */
 class BackupRegistryTest extends BaseTest
 {
-    public function testGet()
+    public function testGetAndAll()
     {
         $registry = new BackupRegistry();
         $registry->add('foo', $this->createNullBackupManager());
 
         $this->assertInstanceOf('Zenstruck\BackupBundle\BackupManager', $registry->get('foo'));
+        $this->assertCount(1, $registry->all());
     }
 
     public function testInvalidGet()

@@ -14,7 +14,7 @@ class RsyncSourceTest extends BaseTest
     public function testFetch()
     {
         $scratch = $this->getScratchDir();
-        $source = new RsyncSource($this->getFixtureDir());
+        $source = new RsyncSource($this->getFixtureDir(), array('--exclude=_cache/'));
 
         $this->assertFileNotExists($scratch.'/Fixtures/foo.txt');
 

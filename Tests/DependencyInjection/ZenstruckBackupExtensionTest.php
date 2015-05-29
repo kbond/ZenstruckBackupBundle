@@ -22,9 +22,7 @@ class ZenstruckBackupExtensionTest extends AbstractExtensionTestCase
 
     public function testConfig()
     {
-        $config = Yaml::parse(__DIR__.'/../Fixtures/full_config.yml');
-
-        $this->load($config);
+        $this->load($this->loadConfig('full_config.yml'));
         $this->compile();
 
         $this->assertTrue($this->container->has('zenstruck_backup.source.database'));
@@ -39,8 +37,34 @@ class ZenstruckBackupExtensionTest extends AbstractExtensionTestCase
         $this->assertTrue($this->container->has('zenstruck_backup.manager.daily'));
     }
 
+    /**
+     * @dataProvider invalidConfigProvider
+     */
+    public function testInvalidConfig($file, $message)
+    {
+        $this->setExpectedException('\LogicException', $message);
+
+        $this->load($this->loadConfig($file));
+        $this->compile();
+    }
+
+    public function invalidConfigProvider()
+    {
+        return array(
+            array('invalid_source.yml', 'Source "foo" is not defined.'),
+            array('invalid_namer.yml', 'Namer "foo" is not defined.'),
+            array('invalid_destination.yml', 'Destination "foo" is not defined.'),
+            array('invalid_processor.yml', 'Processor "foo" is not defined.'),
+        );
+    }
+
     protected function getContainerExtensions()
     {
         return array(new ZenstruckBackupExtension());
+    }
+
+    private function loadConfig($file)
+    {
+        return Yaml::parse(__DIR__.'/../Fixtures/'.$file);
     }
 }

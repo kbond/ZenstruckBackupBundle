@@ -13,6 +13,17 @@ use Zenstruck\BackupBundle\Tests\BaseTest;
  */
 class BackupCommandTest extends BaseTest
 {
+    public function testExecuteNoArguments()
+    {
+        $commandTester = $this->createCommandTester();
+        $commandTester->execute(
+            array('command' => 'zenstruck:backup')
+        );
+
+        $this->assertContains('Available Profiles:', $commandTester->getDisplay());
+        $this->assertContains('- foo', $commandTester->getDisplay());
+    }
+
     public function testExecute()
     {
         $commandTester = $this->createCommandTester(2);
@@ -29,13 +40,16 @@ class BackupCommandTest extends BaseTest
         );
     }
 
-    private function createCommandTester($infoCalls)
+    private function createCommandTester($infoCalls = null)
     {
         $logger = $this->getMock('Psr\Log\LoggerInterface');
-        $logger
-            ->expects($this->exactly($infoCalls))
-            ->method('info')
-        ;
+
+        if (null !== $infoCalls) {
+            $logger
+                ->expects($this->exactly($infoCalls))
+                ->method('info')
+            ;
+        }
 
         $registry = new BackupRegistry();
         $registry->add('foo', $this->createNullBackupManager($logger));

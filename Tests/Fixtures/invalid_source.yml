@@ -1,0 +1,20 @@
+sources:
+    database:
+        mysqldump:
+            database: my_database
+namers:
+    simple:
+        simple: ~
+processors:
+    zip: { zip: ~ }
+destinations:
+    s3:
+        s3cmd:
+            bucket: "s3://foobar/backups"
+profiles:
+    daily:
+        scratch_dir: "%kernel.root_dir%/cache/backup"
+        sources: [database, foo]
+        namer: simple
+        processor: zip
+        destination: s3
