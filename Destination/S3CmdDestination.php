@@ -43,7 +43,7 @@ class S3CmdDestination implements Destination
             }
         );
 
-        if (!$process->isSuccessful()) {
+        if (!$process->isSuccessful() || false !== strpos($process->getErrorOutput(), 'ERROR:')) {
             throw new \RuntimeException($process->getErrorOutput());
         }
     }
