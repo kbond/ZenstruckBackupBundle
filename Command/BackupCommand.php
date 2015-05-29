@@ -28,15 +28,30 @@ class BackupCommand extends Command
         $this
             ->setName('zenstruck:backup')
             ->setDescription('Run a backup')
-            ->addArgument('profile', InputArgument::REQUIRED, 'The backup profile to run')
+            ->addArgument('profile', InputArgument::OPTIONAL, 'The backup profile to run (leave blank for listing)')
             ->addOption('clear', null, InputOption::VALUE_NONE, 'Set this flag to clear scratch directory before backup')
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $manager = $this->registry->get($input->getArgument('profile'));
+        if (!$profile = $input->getArgument('profile')) {
+            $this->listProfiles($output);
+
+            return;
+        }
+
+        $manager = $this->registry->get($profile);
 
         $manager->backup($input->getOption('clear'));
+    }
+
+    private function listProfiles(OutputInterface $output)
+    {
+        $output->writeln('<info>Available Profiles:</info>');
+
+        foreach ($this->registry->all() as $name => $profile) {
+            $output->writeln(' - '.$name);
+        }
     }
 }

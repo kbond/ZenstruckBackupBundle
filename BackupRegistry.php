@@ -34,4 +34,12 @@ class BackupRegistry
 
         return $this->managers[$name];
     }
+
+    /**
+     * @return BackupManager[]
+     */
+    public function all()
+    {
+        return $this->managers;
+    }
 }
