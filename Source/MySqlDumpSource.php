@@ -14,6 +14,7 @@ class MySqlDumpSource implements Source
     const DEFAULT_SSH_PORT  = 22;
 
     private $database;
+    private $host;
     private $user;
     private $password;
     private $sshHost;
@@ -22,15 +23,17 @@ class MySqlDumpSource implements Source
 
     /**
      * @param string      $database
+     * @param string|null $host
      * @param string      $user
      * @param string|null $password
      * @param string|null $sshHost
      * @param string|null $sshUser
      * @param int         $sshPort
      */
-    public function __construct($database, $user = self::DEFAULT_USER, $password = null, $sshHost = null, $sshUser = null, $sshPort = self::DEFAULT_SSH_PORT)
+    public function __construct($database, $host = null, $user = self::DEFAULT_USER, $password = null, $sshHost = null, $sshUser = null, $sshPort = self::DEFAULT_SSH_PORT)
     {
         $this->database = $database;
+        $this->host = $host;
         $this->user = $user;
         $this->password = $password;
         $this->sshHost = $sshHost;
@@ -55,6 +58,10 @@ class MySqlDumpSource implements Source
 
         $processBuilder->add('mysqldump');
         $processBuilder->add(sprintf('-u%s', $this->user));
+
+        if ($this->host) {
+            $processBuilder->add(sprintf('-h%s', $this->host));
+        }
 
         if ($this->password) {
             $processBuilder->add(sprintf('-p%s', $this->password));

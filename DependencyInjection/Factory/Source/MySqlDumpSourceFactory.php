@@ -31,11 +31,12 @@ class MySqlDumpSourceFactory implements Factory
 
         $container->setDefinition($id, new DefinitionDecorator('zenstruck_backup.source.abstract_mysqldump'))
             ->replaceArgument(0, $config['database'])
-            ->replaceArgument(1, $config['user'])
-            ->replaceArgument(2, $config['password'])
-            ->replaceArgument(3, $config['ssh_host'])
-            ->replaceArgument(4, $config['ssh_user'])
-            ->replaceArgument(5, $config['ssh_port'])
+            ->replaceArgument(1, $config['host'])
+            ->replaceArgument(2, $config['user'])
+            ->replaceArgument(3, $config['password'])
+            ->replaceArgument(4, $config['ssh_host'])
+            ->replaceArgument(5, $config['ssh_user'])
+            ->replaceArgument(6, $config['ssh_port'])
         ;
 
         return new Reference($id);
@@ -49,6 +50,7 @@ class MySqlDumpSourceFactory implements Factory
         $builder
             ->children()
                 ->scalarNode('database')->isRequired()->end()
+                ->scalarNode('host')->defaultNull()->end()
                 ->scalarNode('user')->defaultValue(MySqlDumpSource::DEFAULT_USER)->end()
                 ->scalarNode('password')->defaultNull()->end()
                 ->scalarNode('ssh_host')->defaultNull()->end()

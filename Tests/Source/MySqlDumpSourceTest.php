@@ -34,4 +34,14 @@ class MySqlDumpSourceTest extends BaseTest
 
         $source->fetch($scratch, new NullLogger());
     }
+
+    public function testInvalidHost()
+    {
+        $this->setExpectedException('\RuntimeException', "mysqldump: Got error: 2005: Unknown MySQL server host 'foobar'");
+
+        $scratch = $this->getScratchDir();
+        $source = new MySqlDumpSource('zenstruck_backup', 'foobar');
+
+        $source->fetch($scratch, new NullLogger());
+    }
 }
