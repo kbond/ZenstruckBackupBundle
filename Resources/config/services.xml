@@ -28,6 +28,7 @@
         <!-- Sources -->
         <service id="zenstruck_backup.source.abstract_mysqldump" class="Zenstruck\BackupBundle\Source\MySqlDumpSource" abstract="true" public="false">
             <argument /> <!-- database -->
+            <argument /> <!-- host -->
             <argument /> <!-- user -->
             <argument /> <!-- password -->
             <argument /> <!-- ssh_host -->
