@@ -2,53 +2,82 @@
 
 namespace Zenstruck\BackupBundle\Destination;
 
+use ArrayIterator;
 use Psr\Log\LoggerInterface;
 
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
  */
-class StreamDestination extends AbstractDestination
+class StreamDestination implements Destination
 {
+    /**
+     * @var string Path to directory.
+     */
     private $directory;
 
-    public function __construct($directory, array $preRotators = [], array $postRotators = [])
+    /**
+     * @var array<Backup> List of backups.
+     */
+    protected $backups;
+
+    public function __construct($directory)
     {
-        parent::__construct($preRotators, $postRotators);
         $this->directory = $directory;
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function doPush($filename, LoggerInterface $logger)
+    public function push($filename, LoggerInterface $logger)
     {
         $logger->info(sprintf('Copying %s to %s', $filename, $this->directory));
 
-        copy($filename, $target = sprintf('%s/%s', $this->directory, basename($filename)));
+        copy($filename, ($destination = sprintf('%s/%s', $this->directory, basename($filename))));
+        touch($destination, filemtime($filename));
 
-        return new Backup($target, $target, filesize($target), filemtime($target));
+        if (is_array($this->backups)) {
+            $this->backups[] = Backup::fromFile($destination);
+        } else {
+            $this->lazyLoadBackups();
+        }
     }
 
     /**
      * {@inheritdoc}
      */
-    public function doRemove(Backup $backup, LoggerInterface $logger)
+    public function getIterator()
     {
-        unlink($backup->getKey());
+        if (!is_array($this->backups)) {
+            $this->lazyLoadBackups();
+        }
+
+        return new ArrayIterator($this->backups);
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function doLoadBackups()
+    public function count()
+    {
+        if (!is_array($this->backups)) {
+            $this->lazyLoadBackups();
+        }
+
+        return count($this->backups);
+    }
+
+    /**
+     * Loads list of backups in lazy manner.
+     */
+    protected function lazyLoadBackups()
     {
         $list = glob(sprintf('%s/*.*', $this->directory));
 
-        $this->backups = [];
+        $this->backups = array();
 
         foreach ($list as $file) {
             if (is_file($file)) {
-                $this->backups[] = new Backup($file, $file, filesize($file), filemtime($file));
+                $this->backups[] = Backup::fromFile($file);
             }
         }
     }

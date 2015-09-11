@@ -16,12 +16,4 @@ interface Destination extends Countable, IteratorAggregate
      * @param LoggerInterface $logger
      */
     public function push($filename, LoggerInterface $logger);
-
-    /**
-     * Remove backup from backup destination.
-     *
-     * @param Backup $backup
-     * @param LoggerInterface $logger
-     */
-    public function remove(Backup $backup, LoggerInterface $logger);
 }

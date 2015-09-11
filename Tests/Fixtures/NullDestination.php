@@ -3,6 +3,7 @@
 namespace Zenstruck\BackupBundle\Tests\Fixtures;
 
 use Psr\Log\LoggerInterface;
+use Traversable;
 use Zenstruck\BackupBundle\Destination\Destination;
 
 /**
@@ -16,5 +17,21 @@ class NullDestination implements Destination
     public function push($filename, LoggerInterface $logger)
     {
         // noop
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getIterator()
+    {
+        return array();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function count()
+    {
+        return 0;
     }
 }

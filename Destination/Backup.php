@@ -1,7 +1,15 @@
 <?php
 
 namespace Zenstruck\BackupBundle\Destination;
+use DateTime;
 
+/**
+ * Class Backup
+ *
+ * Abstraction of one backup file.
+ *
+ * @package Zenstruck\BackupBundle\Destination
+ */
 final class Backup
 {
     /**
@@ -29,7 +37,7 @@ final class Backup
         $this->key = $key;
         $this->filename = $filename;
         $this->size = $size;
-        $this->createdAt = $createdAt;
+        $this->createdAt = is_integer($createdAt) ? date_timestamp_set(new DateTime(), $createdAt) : $createdAt;
     }
 
     /**
@@ -62,5 +70,16 @@ final class Backup
     public function getCreatedAt()
     {
         return $this->createdAt;
+    }
+
+    /**
+     * Builds backup from file.
+     *
+     * @param string $path Path to file.
+     * @return Backup Backup file.
+     */
+    public static function fromFile($path)
+    {
+        return new Backup($path, $path, filesize($path), filemtime($path));
     }
 }

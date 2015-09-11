@@ -2,11 +2,10 @@
 
 namespace Zenstruck\BackupBundle\Rotator;
 
-use \Exception;
 use Zenstruck\BackupBundle\Destination\Backup;
 use Zenstruck\BackupBundle\Utils\Filesize;
 
-final class MaxStorageSizeRotator implements Rotator
+final class MinCountMaxStorageSizeRotator
 {
     /**
      * @var integer
@@ -14,13 +13,25 @@ final class MaxStorageSizeRotator implements Rotator
     private $maxSize;
 
     /**
+     * @var integer
+     */
+    private $minCount;
+
+    /**
      * A constructor.
      *
-     * @param integer|string $maxSize Maximum storage size.
+     * @param integer $minCount Minimum backups to keep.
+     * @param integer $maxSize Maximum storage size.
      */
-    public function __construct($maxSize)
+    public function __construct($minCount, $maxSize)
     {
-        if (is_numeric($maxSize)) {
+        if ($minCount < 1) {
+            throw new \InvalidArgumentException('At least one file should be set as minimum backup count.');
+        }
+
+        $this->minCount = $minCount;
+
+        if (is_integer($maxSize)) {
             $this->maxSize = $maxSize;
         } else {
             if (class_exists('\\ByteUnits\\System')) {
@@ -57,6 +68,10 @@ final class MaxStorageSizeRotator implements Rotator
              * @var Backup $backup
              */
             foreach ($list as $backup) {
+
+                if (count($list) - count($nominations) <= $this->minCount) {
+                    break;
+                }
 
                 $nominations[] = $backup;
                 $currentSize -= $backup->getSize();
