@@ -2,7 +2,6 @@
 
 namespace Zenstruck\BackupBundle\Rotator;
 
-use \Exception;
 use Zenstruck\BackupBundle\Destination\Backup;
 use Zenstruck\BackupBundle\Utils\Filesize;
 

@@ -39,13 +39,13 @@ class RotatableStreamDestination extends StreamDestination
         if ($this->preRotator) {
 
             if (!is_array($this->backups)) {
-                $this->lazyLoadBackups();
+                $this->getBackups();
             }
 
             $nominations = $this->preRotator->nominate(array_merge($this->backups, array(Backup::fromFile($filename))));
 
             foreach ($nominations as $nomination) {
-                $this->remove($nomination, $logger);
+                $this->doRotate($nomination, $logger);
             }
         }
 
@@ -56,26 +56,20 @@ class RotatableStreamDestination extends StreamDestination
             $nominations = $this->postRotator->nominate($this->backups);
 
             foreach ($nominations as $nomination) {
-                $this->remove($nomination, $logger);
+                $this->doRotate($nomination, $logger);
             }
         }
     }
 
     /**
-     * Remove backup from backup location.
+     * Remove backup from backup location due to rotation.
      *
      * @param Backup $backup Backup to remove.
      * @param LoggerInterface $logger A logger.
      */
-    private function remove(Backup $backup, LoggerInterface $logger)
+    private function doRotate(Backup $backup, LoggerInterface $logger)
     {
-        unlink($backup->getKey());
-        $logger->info(sprintf('Backup "%s" deleted due to rotation.', $backup->getFilename()));
-
-        if ($this->backups) {
-            $this->backups = array_filter($this->backups, function($current) use ($backup) {
-                return $current != $backup;
-            });
-        }
+        $logger->info(sprintf('Removing backup "%s" due to rotation...', $backup->getFilename()));
+        $this->remove($backup, $logger);
     }
 }

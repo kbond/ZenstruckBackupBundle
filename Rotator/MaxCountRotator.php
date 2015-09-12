@@ -2,7 +2,6 @@
 
 namespace Zenstruck\BackupBundle\Rotator;
 
-use InvalidArgumentException;
 use Zenstruck\BackupBundle\Destination\Backup;
 
 final class MaxCountRotator implements Rotator
@@ -20,7 +19,7 @@ final class MaxCountRotator implements Rotator
     public function __construct($count)
     {
         if ($count < 1) {
-            throw new InvalidArgumentException('You need to allow at least one backup file to be created.');
+            throw new \InvalidArgumentException('You need to allow at least one backup file to be created.');
         }
         $this->count = $count;
     }

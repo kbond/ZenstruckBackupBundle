@@ -2,7 +2,6 @@
 
 namespace Zenstruck\BackupBundle\Destination;
 
-use ArrayIterator;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -35,11 +34,12 @@ class StreamDestination implements Destination
         copy($filename, ($destination = sprintf('%s/%s', $this->directory, basename($filename))));
         touch($destination, filemtime($filename));
 
-        if (is_array($this->backups)) {
-            $this->backups[] = Backup::fromFile($destination);
-        } else {
-            $this->lazyLoadBackups();
+
+        if (!$this->backups) {
+            $this->getBackups();
         }
+        $backup = Backup::fromFile($destination);
+        $this->backups[$backup->getKey()] = $backup;
     }
 
     /**
@@ -47,11 +47,7 @@ class StreamDestination implements Destination
      */
     public function getIterator()
     {
-        if (!is_array($this->backups)) {
-            $this->lazyLoadBackups();
-        }
-
-        return new ArrayIterator($this->backups);
+        return new \ArrayIterator($this->getBackups());
     }
 
     /**
@@ -59,26 +55,67 @@ class StreamDestination implements Destination
      */
     public function count()
     {
-        if (!is_array($this->backups)) {
-            $this->lazyLoadBackups();
-        }
-
-        return count($this->backups);
+        return count($this->getBackups());
     }
 
     /**
-     * Loads list of backups in lazy manner.
+     * {@inheritdoc}
      */
-    protected function lazyLoadBackups()
+    public function remove(Backup $backup, LoggerInterface $logger)
     {
-        $list = glob(sprintf('%s/*.*', $this->directory));
+        @unlink($backup->getFilename());
 
-        $this->backups = array();
+        if ($this->backups) {
+            $this->backups[$backup->getKey()];
+        }
 
-        foreach ($list as $file) {
-            if (is_file($file)) {
-                $this->backups[] = Backup::fromFile($file);
+        $logger->info(sprintf('Backup "%s" removed.', $backup->getFilename()));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function get($key)
+    {
+        if ($this->has($key)) {
+            return $this->backups[$key];
+        }
+
+        throw new \RuntimeException(sprintf('Backup with given key "%s" does not exists.', $key));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function has($key)
+    {
+        return array_key_exists($key, $this->getBackups());
+    }
+
+    /**
+     * Get backups.
+     *
+     * Get backups. If backups are not initialized, lazy load them.
+     *
+     * @return Backup[]
+     */
+    protected function getBackups()
+    {
+        if (!$this->backups) {
+
+            $list = glob(sprintf('%s/*.*', $this->directory));
+
+            $this->backups = array();
+
+            foreach ($list as $file) {
+                if (is_file($file)) {
+                    $backup = Backup::fromFile($file);
+                    $this->backups[$backup->getKey()] = $backup;
+                }
             }
         }
+
+
+        return $this->backups;
     }
 }

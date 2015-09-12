@@ -2,11 +2,7 @@
 
 namespace Zenstruck\BackupBundle\Rotator;
 
-use ArrayIterator;
-use Countable;
-use IteratorAggregate;
-
-final class RotatorCollection implements Countable, IteratorAggregate, Rotator
+final class RotatorCollection implements \Countable, \IteratorAggregate, Rotator
 {
     private $rotators;
 
@@ -20,7 +16,7 @@ final class RotatorCollection implements Countable, IteratorAggregate, Rotator
      */
     public function getIterator()
     {
-        return new ArrayIterator($this->rotators);
+        return new \ArrayIterator($this->rotators);
     }
 
     /**

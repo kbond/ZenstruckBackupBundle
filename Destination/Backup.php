@@ -80,6 +80,6 @@ final class Backup
      */
     public static function fromFile($path)
     {
-        return new Backup($path, $path, filesize($path), filemtime($path));
+        return new Backup(md5($path), $path, filesize($path), filemtime($path));
     }
 }
