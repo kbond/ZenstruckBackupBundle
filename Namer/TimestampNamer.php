@@ -12,11 +12,13 @@ class TimestampNamer implements Namer
 
     private $format;
     private $prefix;
+    private $timezone;
 
-    public function __construct($format = self::DEFAULT_FORMAT, $prefix = self::DEFAULT_PREFIX)
+    public function __construct($format = self::DEFAULT_FORMAT, $prefix = self::DEFAULT_PREFIX, $timezone = null)
     {
         $this->format = $format;
         $this->prefix = $prefix;
+        $this->timezone = $timezone ? new \DateTimeZone($timezone) : null;
     }
 
     /**
@@ -24,7 +26,7 @@ class TimestampNamer implements Namer
      */
     public function getName()
     {
-        $dateTime = new \DateTime();
+        $dateTime = new \DateTime('now', $this->timezone);
 
         return $this->prefix.$dateTime->format($this->format);
     }
