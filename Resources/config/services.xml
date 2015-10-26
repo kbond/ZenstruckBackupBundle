@@ -48,6 +48,7 @@
         <service id="zenstruck_backup.namer.abstract_timestamp" class="Zenstruck\BackupBundle\Namer\TimestampNamer" abstract="true" public="false">
             <argument /> <!-- format -->
             <argument /> <!-- prefix -->
+            <argument /> <!-- timezone -->
         </service>
 
         <!-- Processors -->

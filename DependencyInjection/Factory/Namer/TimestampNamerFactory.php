@@ -32,6 +32,7 @@ class TimestampNamerFactory implements Factory
         $container->setDefinition($id, new DefinitionDecorator('zenstruck_backup.namer.abstract_timestamp'))
             ->replaceArgument(0, $config['format'])
             ->replaceArgument(1, $config['prefix'])
+            ->replaceArgument(2, $config['timezone'])
         ;
 
         return new Reference($id);
@@ -46,6 +47,7 @@ class TimestampNamerFactory implements Factory
             ->children()
                 ->scalarNode('format')->defaultValue(TimestampNamer::DEFAULT_FORMAT)->end()
                 ->scalarNode('prefix')->defaultValue(TimestampNamer::DEFAULT_PREFIX)->end()
+                ->scalarNode('timezone')->defaultNull()->end()
             ->end()
         ;
     }

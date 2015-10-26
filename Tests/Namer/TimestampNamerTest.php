@@ -12,10 +12,11 @@ class TimestampNamerTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider getNameProvider
      */
-    public function testGetName($format, $prefix)
+    public function testGetName($format, $prefix, $timezone = null)
     {
-        $namer = new TimestampNamer($format, $prefix);
-        $dateTime = new \DateTime();
+        $namer = new TimestampNamer($format, $prefix, $timezone);
+        $timezone = $timezone ? new \DateTimeZone($timezone) : null;
+        $dateTime = new \DateTime('now', $timezone);
 
         $this->assertSame($prefix.$dateTime->format($format), $namer->getName());
     }
@@ -24,6 +25,7 @@ class TimestampNamerTest extends \PHPUnit_Framework_TestCase
     {
         return array(
             array(TimestampNamer::DEFAULT_FORMAT, TimestampNamer::DEFAULT_PREFIX),
+            array(TimestampNamer::DEFAULT_FORMAT, TimestampNamer::DEFAULT_PREFIX, 'UTC'),
             array('d', null),
             array('dm', null),
             array('s', 'foo-'),

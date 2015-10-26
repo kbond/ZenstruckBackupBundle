@@ -114,6 +114,7 @@ zenstruck_backup:
             timestamp:
                 format:               YmdHis
                 prefix:               ''
+                timezone:             ~
     processors:
 
         # Prototype
