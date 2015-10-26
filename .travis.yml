@@ -5,16 +5,34 @@ php:
   - 5.4
   - 5.5
   - 5.6
+  - 7.0
+  - hhvm
+
+sudo: false
+
+cache:
+  directories:
+    - $HOME/.composer/cache/files
 
 env:
-  - SYMFONY_VERSION=2.3.*
-  - SYMFONY_VERSION=2.5.*
-  - SYMFONY_VERSION=2.6.*
   - SYMFONY_VERSION=2.7.*
 
-before_script:
-  - composer require --prefer-source symfony/symfony:${SYMFONY_VERSION}
-  - mysql -e 'create database zenstruck_backup;'
+matrix:
+  include:
+    - php: 5.6
+      env: SYMFONY_VERSION=2.3.*
+    - php: 5.6
+      env: SYMFONY_VERSION=2.8.*@dev
+    - php: 5.6
+      env: SYMFONY_VERSION=3.0.*@dev
+    - php: 5.3
+      env: COMPOSER_FLAGS="--prefer-lowest"
+
+before_install:
+  - composer self-update
+  - if [ "$SYMFONY_VERSION" != "" ]; then composer require "symfony/symfony:${SYMFONY_VERSION}" --no-update; fi;
+
+install: composer update --prefer-source $COMPOSER_FLAGS
 
 script: phpunit --coverage-clover=coverage.clover
 
