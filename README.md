@@ -4,8 +4,8 @@
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/kbond/ZenstruckBackupBundle/badges/quality-score.png?s=6eb648598aebc72e7b07c8925c19421f7ad1548b)](https://scrutinizer-ci.com/g/kbond/ZenstruckBackupBundle/)
 [![Code Coverage](https://scrutinizer-ci.com/g/kbond/ZenstruckBackupBundle/badges/coverage.png?s=cf342c59af54f9bf00b985c04845d506d41bba9e)](https://scrutinizer-ci.com/g/kbond/ZenstruckBackupBundle/)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/537700be-cb48-4bfd-9b77-356b1ad77cc3/mini.png)](https://insight.sensiolabs.com/projects/537700be-cb48-4bfd-9b77-356b1ad77cc3)
+[![StyleCI](https://styleci.io/repos/18815669/shield)](https://styleci.io/repos/18815669)
 [![Latest Stable Version](https://poser.pugx.org/zenstruck/backup-bundle/v/stable.png)](https://packagist.org/packages/zenstruck/backup-bundle)
-[![Latest Unstable Version](https://poser.pugx.org/zenstruck/backup-bundle/v/unstable.png)](https://packagist.org/packages/zenstruck/backup-bundle)
 [![License](https://poser.pugx.org/zenstruck/backup-bundle/license.png)](https://packagist.org/packages/zenstruck/backup-bundle)
 
 This bundle acts as a wrapper for backing up your Symfony application. A backup "profile" has 3 parts:
