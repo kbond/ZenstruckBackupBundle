@@ -10,8 +10,8 @@ use Symfony\Component\Process\ProcessBuilder;
  */
 class MySqlDumpSource implements Source
 {
-    const DEFAULT_USER      = 'root';
-    const DEFAULT_SSH_PORT  = 22;
+    const DEFAULT_USER = 'root';
+    const DEFAULT_SSH_PORT = 22;
 
     private $database;
     private $host;

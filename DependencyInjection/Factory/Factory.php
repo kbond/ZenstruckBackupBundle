@@ -17,7 +17,7 @@ interface Factory
     public function getName();
 
     /**
-     * Creates the reference, registers it and returns a reference
+     * Creates the reference, registers it and returns a reference.
      *
      * @param ContainerBuilder $container A ContainerBuilder instance
      * @param string           $id        The id of the service
@@ -28,7 +28,7 @@ interface Factory
     public function create(ContainerBuilder $container, $id, array $config);
 
     /**
-     * Adds configuration nodes for the factory
+     * Adds configuration nodes for the factory.
      *
      * @param ArrayNodeDefinition $builder
      */

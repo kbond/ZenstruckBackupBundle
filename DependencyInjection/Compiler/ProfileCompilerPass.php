@@ -12,7 +12,7 @@ use Symfony\Component\DependencyInjection\Reference;
 class ProfileCompilerPass implements CompilerPassInterface
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function process(ContainerBuilder $container)
     {
