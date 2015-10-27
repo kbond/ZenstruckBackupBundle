@@ -34,14 +34,15 @@ class ZenstruckBackupExtensionTest extends AbstractExtensionTestCase
         $this->assertTrue($this->container->has('zenstruck_backup.destination.s3'));
         $this->assertTrue($this->container->has('zenstruck_backup.destination.stream'));
         $this->assertTrue($this->container->has('zenstruck_backup.manager.daily'));
+        $this->assertTrue($this->container->has('zenstruck_backup.manager.monthly'));
     }
 
     /**
      * @dataProvider invalidConfigProvider
      */
-    public function testInvalidConfig($file, $message)
+    public function testInvalidConfig($file, $message, $expectedException = '\LogicException')
     {
-        $this->setExpectedException('\LogicException', $message);
+        $this->setExpectedException($expectedException, $message);
 
         $this->load($this->loadConfig($file));
         $this->compile();
@@ -54,6 +55,9 @@ class ZenstruckBackupExtensionTest extends AbstractExtensionTestCase
             array('invalid_namer.yml', 'Namer "foo" is not defined.'),
             array('invalid_destination.yml', 'Destination "foo" is not defined.'),
             array('invalid_processor.yml', 'Processor "foo" is not defined.'),
+            array('invalid_profile_missing_sources.yml', 'The child node "sources" at path "zenstruck_backup.profiles.daily" must be configured.', 'Symfony\Component\Config\Definition\Exception\InvalidConfigurationException'),
+            array('invalid_profile_missing_namer.yml', 'The child node "namer" at path "zenstruck_backup.profiles.daily" must be configured.', 'Symfony\Component\Config\Definition\Exception\InvalidConfigurationException'),
+            array('invalid_profile_missing_destinations.yml', 'The child node "destinations" at path "zenstruck_backup.profiles.daily" must be configured.', 'Symfony\Component\Config\Definition\Exception\InvalidConfigurationException'),
         );
     }
 

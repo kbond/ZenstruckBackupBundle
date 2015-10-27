@@ -87,18 +87,23 @@ class ZenstruckBackupExtension extends Extension
 
             $processorToAdd = $processors[$profile['processor']];
 
-            if (!isset($destinations[$profile['destination']])) {
-                throw new \LogicException(sprintf('Destination "%s" is not defined.', $profile['destination']));
-            }
+            $destinationsToAdd = array();
 
-            $destinationToAdd = $destinations[$profile['destination']];
+            // validate
+            foreach ($profile['destinations'] as $destination) {
+                if (!isset($destinations[$destination])) {
+                    throw new \LogicException(sprintf('Destination "%s" is not defined.', $destination));
+                }
+
+                $destinationsToAdd[] = $destinations[$destination];
+            }
 
             $container->setDefinition(sprintf('zenstruck_backup.manager.%s', $name), new DefinitionDecorator('zenstruck_backup.manager'))
                 ->replaceArgument(0, $profile['scratch_dir'])
                 ->replaceArgument(1, $processorToAdd)
                 ->replaceArgument(2, $namerToAdd)
                 ->replaceArgument(3, $sourcesToAdd)
-                ->replaceArgument(4, $destinationToAdd)
+                ->replaceArgument(4, $destinationsToAdd)
                 ->addTag('zenstruck_backup.profile', array('alias' => $name))
             ;
         }

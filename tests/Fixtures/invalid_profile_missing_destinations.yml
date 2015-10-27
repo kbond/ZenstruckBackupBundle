@@ -1,0 +1,6 @@
+profiles:
+    daily:
+        scratch_dir: "%kernel.root_dir%/cache/backup"
+        sources: [database]
+        namer: daily
+        processor: zip

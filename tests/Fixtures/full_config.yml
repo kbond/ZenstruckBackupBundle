@@ -34,3 +34,9 @@ profiles:
         namer: daily
         processor: zip
         destination: s3
+    monthly:
+        scratch_dir: "%kernel.root_dir%/cache/backup"
+        sources: files
+        namer: daily
+        processor: zip
+        destinations: [s3, stream]

@@ -14,7 +14,7 @@
             <argument /> <!-- processor -->
             <argument /> <!-- namer -->
             <argument /> <!-- sources -->
-            <argument /> <!-- destination -->
+            <argument /> <!-- destinations -->
             <argument type="service" id="logger" />
             <tag name="monolog.logger" channel="backup" />
         </service>

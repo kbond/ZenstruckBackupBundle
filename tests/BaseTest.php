@@ -39,7 +39,7 @@ abstract class BaseTest extends \PHPUnit_Framework_TestCase
             new NullProcessor(),
             new SimpleNamer(),
             array(new NullSource()),
-            new NullDestination(),
+            array(new NullDestination()),
             $logger
         );
     }
