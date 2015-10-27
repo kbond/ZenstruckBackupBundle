@@ -54,4 +54,45 @@ class S3CmdDestination implements Destination
             throw new \RuntimeException($process->getErrorOutput());
         }
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getIterator()
+    {
+        throw new \RuntimeException('Not implemented yet');
+
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function count()
+    {
+        throw new \RuntimeException('Not implemented yet');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function remove(Backup $backup, LoggerInterface $logger)
+    {
+        // TODO: Implement remove() method.
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function get($key)
+    {
+        throw new \RuntimeException('Not implemented yet');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function has($key)
+    {
+        throw new \RuntimeException('Not implemented yet');
+    }
 }
