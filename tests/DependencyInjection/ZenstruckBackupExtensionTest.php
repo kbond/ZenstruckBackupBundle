@@ -16,7 +16,6 @@ class ZenstruckBackupExtensionTest extends AbstractExtensionTestCase
         $this->load();
         $this->compile();
 
-        $this->assertTrue($this->container->has('zenstruck_backup.command'));
         $this->assertTrue($this->container->has('zenstruck_backup.registry'));
     }
 

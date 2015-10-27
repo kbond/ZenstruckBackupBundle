@@ -5,14 +5,8 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-        <!-- Command -->
-        <service id="zenstruck_backup.command" class="Zenstruck\BackupBundle\Command\BackupCommand">
-            <argument type="service" id="zenstruck_backup.registry" />
-            <tag name="console.command" />
-        </service>
-
         <!-- Registry -->
-        <service id="zenstruck_backup.registry" class="Zenstruck\BackupBundle\BackupRegistry" public="false" />
+        <service id="zenstruck_backup.registry" class="Zenstruck\BackupBundle\BackupRegistry" />
 
         <!-- Manager -->
         <service id="zenstruck_backup.manager" class="Zenstruck\BackupBundle\BackupManager" abstract="true" public="false">

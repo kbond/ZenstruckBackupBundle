@@ -53,8 +53,19 @@ class BackupCommandTest extends BaseTest
 
         $registry = new BackupRegistry();
         $registry->add('foo', $this->createNullBackupManager($logger));
+
+        $container = $this->getMock('Symfony\Component\DependencyInjection\ContainerInterface');
+        $container
+            ->expects($this->once())
+            ->method('get')
+            ->with('zenstruck_backup.registry')
+            ->willReturn($registry);
+
+        $command = new BackupCommand();
+        $command->setContainer($container);
+
         $application = new Application();
-        $application->add(new BackupCommand($registry));
+        $application->add($command);
 
         $command = $application->find('zenstruck:backup');
 
