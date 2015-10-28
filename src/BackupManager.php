@@ -18,7 +18,7 @@ class BackupManager
     private $sources;
     private $processor;
     private $namer;
-    private $destination;
+    private $destinations;
     private $logger;
 
     /**
@@ -26,16 +26,16 @@ class BackupManager
      * @param Processor       $processor
      * @param Namer           $namer
      * @param Source[]        $sources
-     * @param Destination     $destination
+     * @param Destination[]   $destinations
      * @param LoggerInterface $logger
      */
-    public function __construct($scratchDir, Processor $processor, Namer $namer, array $sources, Destination $destination, LoggerInterface $logger)
+    public function __construct($scratchDir, Processor $processor, Namer $namer, array $sources, array $destinations, LoggerInterface $logger)
     {
         $this->scratchDir = $scratchDir;
         $this->processor = $processor;
         $this->namer = $namer;
         $this->sources = $sources;
-        $this->destination = $destination;
+        $this->destinations = $destinations;
         $this->logger = $logger;
     }
 
@@ -60,7 +60,7 @@ class BackupManager
         $filename = $this->processor->process($this->scratchDir, $this->namer, $this->logger);
 
         try {
-            $this->destination->push($filename, $this->logger);
+            $this->sendToDestinations($filename);
         } catch (\Exception $e) {
             $this->processor->cleanup($filename, $this->logger);
 
@@ -69,5 +69,12 @@ class BackupManager
 
         $this->processor->cleanup($filename, $this->logger);
         $this->logger->info('Done.');
+    }
+
+    private function sendToDestinations($filename)
+    {
+        foreach ($this->destinations as $destination) {
+            $destination->push($filename, $this->logger);
+        }
     }
 }

@@ -73,7 +73,7 @@ zenstruck_backup:
             sources: [database, files]
             namer: daily
             processor: zip
-            destination: s3
+            destinations: [s3]
 ```
 
 ## Backup Command
@@ -159,8 +159,9 @@ zenstruck_backup:
         # Prototype
         name:
             scratch_dir:          '%kernel.cache_dir%/backup'
-            sources:              [] # Required
-            namer:                ~ # Required
-            processor:            ~ # Required
-            destination:          ~ # Required
+            sources:              [] # Required, can be a string
+            namer:                ~  # Required
+            processor:            ~  # Required
+            destinations:         [] # Required, can be a string
+            destination:          ~  # ** Deprecated ** - Use "destinations" instead
 ```

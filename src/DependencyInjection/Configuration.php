@@ -52,10 +52,36 @@ class Configuration implements ConfigurationInterface
                                 ->isRequired()
                                 ->requiresAtLeastOneElement()
                                 ->prototype('scalar')->end()
+                                ->beforeNormalization()
+                                    ->ifString()
+                                    ->then(function ($v) { return array($v); })
+                                ->end()
                             ->end()
                             ->scalarNode('namer')->isRequired()->end()
                             ->scalarNode('processor')->isRequired()->end()
-                            ->scalarNode('destination')->isRequired()->end()
+                            ->scalarNode('destination')
+                                ->info('** Deprecated ** - Use "destinations" instead')
+                                ->defaultNull()
+                            ->end()
+                            ->arrayNode('destinations')
+                                ->isRequired()
+                                ->requiresAtLeastOneElement()
+                                ->prototype('scalar')->end()
+                                ->beforeNormalization()
+                                    ->ifString()
+                                    ->then(function ($v) { return array($v); })
+                                ->end()
+                            ->end()
+                        ->end()
+                        ->beforeNormalization()
+                            ->ifTrue(function ($v) {
+                                return isset($v['destination']) && null !== $v['destination'] && empty($v['destinations']);
+                            })
+                            ->then(function ($v) {
+                                $v['destinations'] = array($v['destination']);
+
+                                return $v;
+                            })
                         ->end()
                     ->end()
                 ->end()

@@ -2,7 +2,7 @@
 
 namespace Zenstruck\BackupBundle\Command;
 
-use Symfony\Component\Console\Command\Command;
+use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -12,17 +12,8 @@ use Zenstruck\BackupBundle\BackupRegistry;
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
  */
-class BackupCommand extends Command
+class BackupCommand extends ContainerAwareCommand
 {
-    private $registry;
-
-    public function __construct(BackupRegistry $registry)
-    {
-        $this->registry = $registry;
-
-        parent::__construct();
-    }
-
     protected function configure()
     {
         $this
@@ -35,22 +26,25 @@ class BackupCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        /** @var BackupRegistry $registry */
+        $registry = $this->getContainer()->get('zenstruck_backup.registry');
+
         if (!$profile = $input->getArgument('profile')) {
-            $this->listProfiles($output);
+            $this->listProfiles($output, $registry);
 
             return;
         }
 
-        $manager = $this->registry->get($profile);
+        $manager = $registry->get($profile);
 
         $manager->backup($input->getOption('clear'));
     }
 
-    private function listProfiles(OutputInterface $output)
+    private function listProfiles(OutputInterface $output, BackupRegistry $registry)
     {
         $output->writeln('<info>Available Profiles:</info>');
 
-        foreach ($this->registry->all() as $name => $profile) {
+        foreach ($registry->all() as $name => $profile) {
             $output->writeln(' - '.$name);
         }
     }
