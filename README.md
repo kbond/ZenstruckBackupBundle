@@ -1,12 +1,12 @@
 # ZenstruckBackupBundle
 
-[![Build Status](https://travis-ci.org/kbond/ZenstruckBackupBundle.png?branch=master)](https://travis-ci.org/kbond/ZenstruckBackupBundle)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/kbond/ZenstruckBackupBundle/badges/quality-score.png?s=6eb648598aebc72e7b07c8925c19421f7ad1548b)](https://scrutinizer-ci.com/g/kbond/ZenstruckBackupBundle/)
-[![Code Coverage](https://scrutinizer-ci.com/g/kbond/ZenstruckBackupBundle/badges/coverage.png?s=cf342c59af54f9bf00b985c04845d506d41bba9e)](https://scrutinizer-ci.com/g/kbond/ZenstruckBackupBundle/)
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/537700be-cb48-4bfd-9b77-356b1ad77cc3/mini.png)](https://insight.sensiolabs.com/projects/537700be-cb48-4bfd-9b77-356b1ad77cc3)
+[![Build Status](http://img.shields.io/travis/kbond/ZenstruckBackupBundle.svg?style=flat-square)](https://travis-ci.org/kbond/ZenstruckBackupBundle)
+[![Scrutinizer Code Quality](http://img.shields.io/scrutinizer/g/kbond/ZenstruckBackupBundle.svg?style=flat-square)](https://scrutinizer-ci.com/g/kbond/ZenstruckBackupBundle/)
+[![Code Coverage](http://img.shields.io/scrutinizer/coverage/g/kbond/ZenstruckBackupBundle.svg?style=flat-square)](https://scrutinizer-ci.com/g/kbond/ZenstruckBackupBundle/)
+[![SensioLabs Insight](https://img.shields.io/sensiolabs/i/537700be-cb48-4bfd-9b77-356b1ad77cc3.svg?style=flat-square)](https://insight.sensiolabs.com/projects/537700be-cb48-4bfd-9b77-356b1ad77cc3)
 [![StyleCI](https://styleci.io/repos/18815669/shield)](https://styleci.io/repos/18815669)
-[![Latest Stable Version](https://poser.pugx.org/zenstruck/backup-bundle/v/stable.png)](https://packagist.org/packages/zenstruck/backup-bundle)
-[![License](https://poser.pugx.org/zenstruck/backup-bundle/license.png)](https://packagist.org/packages/zenstruck/backup-bundle)
+[![Latest Stable Version](http://img.shields.io/packagist/v/zenstruck/backup-bundle.svg?style=flat-square)](https://packagist.org/packages/zenstruck/backup-bundle)
+[![License](http://img.shields.io/packagist/l/zenstruck/backup-bundle.svg?style=flat-square)](https://packagist.org/packages/zenstruck/backup-bundle)
 
 This bundle acts as a wrapper for backing up your Symfony application. A backup "profile" has 3 parts:
 
