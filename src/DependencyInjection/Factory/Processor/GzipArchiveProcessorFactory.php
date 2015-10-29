@@ -32,6 +32,7 @@ class GzipArchiveProcessorFactory implements Factory
         $container->setDefinition($serviceId, new DefinitionDecorator('zenstruck_backup.processor.abstract_gzip'))
             ->replaceArgument(0, $id)
             ->replaceArgument(1, $config['options'])
+            ->addTag('zenstruck_backup.processor')
         ;
 
         return new Reference($serviceId);

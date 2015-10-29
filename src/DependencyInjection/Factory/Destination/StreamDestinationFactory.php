@@ -31,6 +31,7 @@ class StreamDestinationFactory implements Factory
         $container->setDefinition($serviceId, new DefinitionDecorator('zenstruck_backup.destination.abstract_stream'))
             ->replaceArgument(0, $id)
             ->replaceArgument(1, $config['directory'])
+            ->addTag('zenstruck_backup.destination')
         ;
 
         return new Reference($serviceId);

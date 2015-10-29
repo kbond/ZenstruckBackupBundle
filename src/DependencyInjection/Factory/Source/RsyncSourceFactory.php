@@ -34,6 +34,7 @@ class RsyncSourceFactory implements Factory
             ->replaceArgument(1, $config['source'])
             ->replaceArgument(2, $config['additional_options'])
             ->replaceArgument(3, $config['default_options'])
+            ->addTag('zenstruck_backup.source')
         ;
 
         return new Reference($serviceId);

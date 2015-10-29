@@ -34,6 +34,7 @@ class TimestampNamerFactory implements Factory
             ->replaceArgument(1, $config['format'])
             ->replaceArgument(2, $config['prefix'])
             ->replaceArgument(3, $config['timezone'])
+            ->addTag('zenstruck_backup.namer')
         ;
 
         return new Reference($serviceId);

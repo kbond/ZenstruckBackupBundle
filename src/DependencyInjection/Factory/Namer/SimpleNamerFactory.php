@@ -31,6 +31,7 @@ class SimpleNamerFactory implements Factory
 
         $container->setDefinition($serviceId, new DefinitionDecorator('zenstruck_backup.namer.abstract_simple'))
             ->replaceArgument(0, $config['name'])
+            ->addTag('zenstruck_backup.namer')
         ;
 
         return new Reference($serviceId);

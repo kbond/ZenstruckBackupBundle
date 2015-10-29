@@ -34,6 +34,7 @@ class S3CmdDestinationFactory implements Factory
             ->replaceArgument(1, $config['bucket'])
             ->replaceArgument(2, $config['timeout'])
             ->replaceArgument(3, $config['options'])
+            ->addTag('zenstruck_backup.destination')
         ;
 
         return new Reference($serviceId);

@@ -38,6 +38,7 @@ class MySqlDumpSourceFactory implements Factory
             ->replaceArgument(5, $config['ssh_host'])
             ->replaceArgument(6, $config['ssh_user'])
             ->replaceArgument(7, $config['ssh_port'])
+            ->addTag('zenstruck_backup.source')
         ;
 
         return new Reference($serviceId);

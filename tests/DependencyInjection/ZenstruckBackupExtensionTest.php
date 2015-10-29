@@ -32,17 +32,17 @@ class ZenstruckBackupExtensionTest extends AbstractExtensionTestCase
         $this->load($this->loadConfig('valid_config.yml'));
         $this->compile();
 
-        $this->assertContainerBuilderHasService('zenstruck_backup.source.database');
-        $this->assertContainerBuilderHasService('zenstruck_backup.source.files');
-        $this->assertContainerBuilderHasService('zenstruck_backup.namer.simple');
-        $this->assertContainerBuilderHasService('zenstruck_backup.namer.daily');
-        $this->assertContainerBuilderHasService('zenstruck_backup.namer.snapshot');
-        $this->assertContainerBuilderHasService('zenstruck_backup.processor.zip');
-        $this->assertContainerBuilderHasService('zenstruck_backup.processor.gzip');
-        $this->assertContainerBuilderHasService('zenstruck_backup.destination.s3');
-        $this->assertContainerBuilderHasService('zenstruck_backup.destination.stream');
-        $this->assertContainerBuilderHasService('zenstruck_backup.profile.daily');
-        $this->assertContainerBuilderHasService('zenstruck_backup.profile.monthly');
+        $this->assertContainerBuilderHasServiceDefinitionWithTag('zenstruck_backup.source.database', 'zenstruck_backup.source');
+        $this->assertContainerBuilderHasServiceDefinitionWithTag('zenstruck_backup.source.files', 'zenstruck_backup.source');
+        $this->assertContainerBuilderHasServiceDefinitionWithTag('zenstruck_backup.namer.simple', 'zenstruck_backup.namer');
+        $this->assertContainerBuilderHasServiceDefinitionWithTag('zenstruck_backup.namer.daily', 'zenstruck_backup.namer');
+        $this->assertContainerBuilderHasServiceDefinitionWithTag('zenstruck_backup.namer.snapshot', 'zenstruck_backup.namer');
+        $this->assertContainerBuilderHasServiceDefinitionWithTag('zenstruck_backup.processor.zip', 'zenstruck_backup.processor');
+        $this->assertContainerBuilderHasServiceDefinitionWithTag('zenstruck_backup.processor.gzip', 'zenstruck_backup.processor');
+        $this->assertContainerBuilderHasServiceDefinitionWithTag('zenstruck_backup.destination.s3', 'zenstruck_backup.destination');
+        $this->assertContainerBuilderHasServiceDefinitionWithTag('zenstruck_backup.destination.stream', 'zenstruck_backup.destination');
+        $this->assertContainerBuilderHasServiceDefinitionWithTag('zenstruck_backup.profile.daily', 'zenstruck_backup.profile');
+        $this->assertContainerBuilderHasServiceDefinitionWithTag('zenstruck_backup.profile.monthly', 'zenstruck_backup.profile');
     }
 
     /**

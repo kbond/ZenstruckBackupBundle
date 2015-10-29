@@ -7,14 +7,12 @@
     <services>
         <service id="zenstruck_backup.namer.abstract_simple" class="Zenstruck\Backup\Namer\SimpleNamer" abstract="true" public="false">
             <argument /> <!-- name -->
-            <tag name="zenstruck_backup.namer" />
         </service>
         <service id="zenstruck_backup.namer.abstract_timestamp" class="Zenstruck\Backup\Namer\TimestampNamer" abstract="true" public="false">
             <argument /> <!-- name -->
             <argument /> <!-- format -->
             <argument /> <!-- prefix -->
             <argument /> <!-- timezone -->
-            <tag name="zenstruck_backup.namer" />
         </service>
     </services>
 </container>

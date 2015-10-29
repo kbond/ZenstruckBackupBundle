@@ -26,10 +26,6 @@ abstract class RegisterCompilerPass implements CompilerPassInterface
         $taggedServices = $container->findTaggedServiceIds($this->getTagName());
 
         foreach (array_keys($taggedServices) as $id) {
-            if ($container->getDefinition($id)->isAbstract()) {
-                continue;
-            }
-
             $definition->addMethodCall($this->getMethodName(), array(new Reference($id)));
         }
     }
