@@ -26,6 +26,7 @@
             <argument /> <!-- namer -->
             <argument type="collection" /> <!-- sources -->
             <argument type="collection" /> <!-- destinations -->
+            <tag name="zenstruck_backup.profile" />
         </service>
     </services>
 </container>
