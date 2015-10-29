@@ -14,7 +14,7 @@ abstract class RegisterCompilerPassTest extends AbstractCompilerPassTestCase
     /**
      * @test
      */
-    public function it_processes_tagged_services()
+    public function it_registers_tagged_services()
     {
         $registrarDefinition = new Definition();
         $this->setDefinition($this->getRegistrarDefinitionName(), $registrarDefinition);
@@ -30,6 +30,26 @@ abstract class RegisterCompilerPassTest extends AbstractCompilerPassTestCase
             $this->getMethodName(),
             array(new Reference('my_service'))
         );
+    }
+
+    /**
+     * @test
+     */
+    public function it_does_not_register_abstract_services()
+    {
+        $definition = new Definition();
+        $this->setDefinition($this->getRegistrarDefinitionName(), $definition);
+
+        $service = new Definition();
+        $service->addTag($this->getTagName());
+        $service->setAbstract(true);
+        $this->setDefinition('my_service', $service);
+
+        $this->compile();
+
+        $definition = $this->container->findDefinition($this->getRegistrarDefinitionName());
+
+        $this->assertEmpty($definition->getMethodCalls());
     }
 
     /**
