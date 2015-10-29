@@ -3,19 +3,19 @@
 namespace Zenstruck\BackupBundle\Tests\DependencyInjection\Compiler;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Zenstruck\BackupBundle\DependencyInjection\Compiler\ProfileCompilerPass;
+use Zenstruck\BackupBundle\DependencyInjection\Compiler\NamerCompilerPass;
 
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
  */
-class ProfileCompilerPassTest extends RegisterCompilerPassTest
+class NamerCompilerPassTest extends RegisterCompilerPassTest
 {
     /**
      * {@inheritdoc}
      */
     protected function getRegistrarDefinitionName()
     {
-        return 'zenstruck_backup.profile_registry';
+        return 'zenstruck_backup.profile_builder';
     }
 
     /**
@@ -23,7 +23,7 @@ class ProfileCompilerPassTest extends RegisterCompilerPassTest
      */
     protected function getTagName()
     {
-        return 'zenstruck_backup.profile';
+        return 'zenstruck_backup.namer';
     }
 
     /**
@@ -31,7 +31,7 @@ class ProfileCompilerPassTest extends RegisterCompilerPassTest
      */
     protected function getMethodName()
     {
-        return 'add';
+        return 'addNamer';
     }
 
     /**
@@ -39,6 +39,6 @@ class ProfileCompilerPassTest extends RegisterCompilerPassTest
      */
     protected function registerCompilerPass(ContainerBuilder $container)
     {
-        $container->addCompilerPass(new ProfileCompilerPass());
+        $container->addCompilerPass(new NamerCompilerPass());
     }
 }

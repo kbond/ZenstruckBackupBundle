@@ -7,7 +7,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\DefinitionDecorator;
 use Symfony\Component\DependencyInjection\Reference;
 use Zenstruck\BackupBundle\DependencyInjection\Factory\Factory;
-use Zenstruck\BackupBundle\Namer\TimestampNamer;
+use Zenstruck\Backup\Namer\TimestampNamer;
 
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
@@ -27,15 +27,16 @@ class TimestampNamerFactory implements Factory
      */
     public function create(ContainerBuilder $container, $id, array $config)
     {
-        $id = sprintf('zenstruck_backup.namer.%s', $id);
+        $serviceId = sprintf('zenstruck_backup.namer.%s', $id);
 
-        $container->setDefinition($id, new DefinitionDecorator('zenstruck_backup.namer.abstract_timestamp'))
-            ->replaceArgument(0, $config['format'])
-            ->replaceArgument(1, $config['prefix'])
-            ->replaceArgument(2, $config['timezone'])
+        $container->setDefinition($serviceId, new DefinitionDecorator('zenstruck_backup.namer.abstract_timestamp'))
+            ->replaceArgument(0, $id)
+            ->replaceArgument(1, $config['format'])
+            ->replaceArgument(2, $config['prefix'])
+            ->replaceArgument(3, $config['timezone'])
         ;
 
-        return new Reference($id);
+        return new Reference($serviceId);
     }
 
     /**

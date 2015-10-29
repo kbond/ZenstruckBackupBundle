@@ -3,4 +3,4 @@ profiles:
         scratch_dir: "%kernel.root_dir%/cache/backup"
         sources: [database]
         processor: zip
-        destination: s3
+        destinations: s3

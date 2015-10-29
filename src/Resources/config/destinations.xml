@@ -1,0 +1,21 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="zenstruck_backup.destination.abstract_stream" class="Zenstruck\Backup\Destination\StreamDestination" abstract="true" public="false">
+            <argument /> <!-- name -->
+            <argument /> <!-- directory -->
+            <tag name="zenstruck_backup.destination" />
+        </service>
+        <service id="zenstruck_backup.destination.abstract_s3cmd" class="Zenstruck\Backup\Destination\S3CmdDestination" abstract="true" public="false">
+            <argument /> <!-- name -->
+            <argument /> <!-- bucket -->
+            <argument /> <!-- timeout -->
+            <argument type="collection" /> <!-- options -->
+            <tag name="zenstruck_backup.destination" />
+        </service>
+    </services>
+</container>

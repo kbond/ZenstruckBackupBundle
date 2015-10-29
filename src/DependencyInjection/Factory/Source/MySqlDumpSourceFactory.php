@@ -7,7 +7,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\DefinitionDecorator;
 use Symfony\Component\DependencyInjection\Reference;
 use Zenstruck\BackupBundle\DependencyInjection\Factory\Factory;
-use Zenstruck\BackupBundle\Source\MySqlDumpSource;
+use Zenstruck\Backup\Source\MySqlDumpSource;
 
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
@@ -27,19 +27,20 @@ class MySqlDumpSourceFactory implements Factory
      */
     public function create(ContainerBuilder $container, $id, array $config)
     {
-        $id = sprintf('zenstruck_backup.source.%s', $id);
+        $serviceId = sprintf('zenstruck_backup.source.%s', $id);
 
-        $container->setDefinition($id, new DefinitionDecorator('zenstruck_backup.source.abstract_mysqldump'))
-            ->replaceArgument(0, $config['database'])
-            ->replaceArgument(1, $config['host'])
-            ->replaceArgument(2, $config['user'])
-            ->replaceArgument(3, $config['password'])
-            ->replaceArgument(4, $config['ssh_host'])
-            ->replaceArgument(5, $config['ssh_user'])
-            ->replaceArgument(6, $config['ssh_port'])
+        $container->setDefinition($serviceId, new DefinitionDecorator('zenstruck_backup.source.abstract_mysqldump'))
+            ->replaceArgument(0, $id)
+            ->replaceArgument(1, $config['database'])
+            ->replaceArgument(2, $config['host'])
+            ->replaceArgument(3, $config['user'])
+            ->replaceArgument(4, $config['password'])
+            ->replaceArgument(5, $config['ssh_host'])
+            ->replaceArgument(6, $config['ssh_user'])
+            ->replaceArgument(7, $config['ssh_port'])
         ;
 
-        return new Reference($id);
+        return new Reference($serviceId);
     }
 
     /**

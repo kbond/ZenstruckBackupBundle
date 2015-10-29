@@ -7,7 +7,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\DefinitionDecorator;
 use Symfony\Component\DependencyInjection\Reference;
 use Zenstruck\BackupBundle\DependencyInjection\Factory\Factory;
-use Zenstruck\BackupBundle\Processor\ZipArchiveProcessor;
+use Zenstruck\Backup\Processor\ZipArchiveProcessor;
 
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
@@ -27,13 +27,14 @@ class ZipArchiveProcessorFactory implements Factory
      */
     public function create(ContainerBuilder $container, $id, array $config)
     {
-        $id = sprintf('zenstruck_backup.processor.%s', $id);
+        $serviceId = sprintf('zenstruck_backup.processor.%s', $id);
 
-        $container->setDefinition($id, new DefinitionDecorator('zenstruck_backup.processor.abstract_zip'))
-            ->replaceArgument(0, $config['options'])
+        $container->setDefinition($serviceId, new DefinitionDecorator('zenstruck_backup.processor.abstract_zip'))
+            ->replaceArgument(0, $id)
+            ->replaceArgument(1, $config['options'])
         ;
 
-        return new Reference($id);
+        return new Reference($serviceId);
     }
 
     /**

@@ -26,13 +26,14 @@ class StreamDestinationFactory implements Factory
      */
     public function create(ContainerBuilder $container, $id, array $config)
     {
-        $id = sprintf('zenstruck_backup.destination.%s', $id);
+        $serviceId = sprintf('zenstruck_backup.destination.%s', $id);
 
-        $container->setDefinition($id, new DefinitionDecorator('zenstruck_backup.destination.abstract_stream'))
-            ->replaceArgument(0, $config['directory'])
+        $container->setDefinition($serviceId, new DefinitionDecorator('zenstruck_backup.destination.abstract_stream'))
+            ->replaceArgument(0, $id)
+            ->replaceArgument(1, $config['directory'])
         ;
 
-        return new Reference($id);
+        return new Reference($serviceId);
     }
 
     /**

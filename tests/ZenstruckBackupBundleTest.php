@@ -9,16 +9,26 @@ use Zenstruck\BackupBundle\ZenstruckBackupBundle;
  */
 class ZenstruckBackupBundleTest extends \PHPUnit_Framework_TestCase
 {
-    public function testCompilerPassesAreRegistered()
+    /**
+     * @test
+     */
+    public function compiler_passes_are_registered()
     {
         $container = $this
             ->getMockBuilder('Symfony\Component\DependencyInjection\ContainerBuilder')
             ->setMethods(array('addCompilerPass'))
             ->getMock();
+
         $container
-            ->expects($this->atLeastOnce())
+            ->expects($this->exactly(5))
             ->method('addCompilerPass')
-            ->with($this->isInstanceOf('Symfony\\Component\\DependencyInjection\\Compiler\\CompilerPassInterface'));
+            ->withConsecutive(
+                $this->isInstanceOf('Zenstruck\BackupBundle\DependencyInjection\Compiler\ProfileCompilerPass'),
+                $this->isInstanceOf('Zenstruck\BackupBundle\DependencyInjection\Compiler\DestinationCompilerPass'),
+                $this->isInstanceOf('Zenstruck\BackupBundle\DependencyInjection\Compiler\SourceCompilerPass'),
+                $this->isInstanceOf('Zenstruck\BackupBundle\DependencyInjection\Compiler\ProcessorCompilerPass'),
+                $this->isInstanceOf('Zenstruck\BackupBundle\DependencyInjection\Compiler\NamerCompilerPass')
+            );
 
         $bundle = new ZenstruckBackupBundle();
         $bundle->build($container);
