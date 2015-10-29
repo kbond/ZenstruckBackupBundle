@@ -68,8 +68,8 @@ class ZenstruckBackupExtension extends Extension
                 ->replaceArgument(1, $profile['scratch_dir'])
                 ->replaceArgument(2, $profile['processor'])
                 ->replaceArgument(3, $profile['namer'])
-                ->replaceArgument(3, $profile['sources'])
-                ->replaceArgument(3, $profile['destinations'])
+                ->replaceArgument(4, $profile['sources'])
+                ->replaceArgument(5, $profile['destinations'])
                 ->addTag('zenstruck_backup.profile');
         }
     }
