@@ -11,36 +11,46 @@ use Zenstruck\BackupBundle\DependencyInjection\ZenstruckBackupExtension;
  */
 class ZenstruckBackupExtensionTest extends AbstractExtensionTestCase
 {
-    public function testDefault()
+    /**
+     * @test
+     */
+    public function can_compile_with_no_config()
     {
         $this->load();
         $this->compile();
 
-        $this->assertTrue($this->container->has('zenstruck_backup.registry'));
-    }
-
-    public function testConfig()
-    {
-        $this->load($this->loadConfig('full_config.yml'));
-        $this->compile();
-
-        $this->assertTrue($this->container->has('zenstruck_backup.source.database'));
-        $this->assertTrue($this->container->has('zenstruck_backup.source.files'));
-        $this->assertTrue($this->container->has('zenstruck_backup.namer.simple'));
-        $this->assertTrue($this->container->has('zenstruck_backup.namer.daily'));
-        $this->assertTrue($this->container->has('zenstruck_backup.namer.snapshot'));
-        $this->assertTrue($this->container->has('zenstruck_backup.processor.zip'));
-        $this->assertTrue($this->container->has('zenstruck_backup.processor.gzip'));
-        $this->assertTrue($this->container->has('zenstruck_backup.destination.s3'));
-        $this->assertTrue($this->container->has('zenstruck_backup.destination.stream'));
-        $this->assertTrue($this->container->has('zenstruck_backup.manager.daily'));
-        $this->assertTrue($this->container->has('zenstruck_backup.manager.monthly'));
+        $this->assertContainerBuilderHasService('zenstruck_backup.profile_registry');
+        $this->assertContainerBuilderHasService('zenstruck_backup.profile_builder');
+        $this->assertContainerBuilderHasService('zenstruck_backup.executor');
     }
 
     /**
+     * @test
+     */
+    public function compile_with_valid_config()
+    {
+        $this->load($this->loadConfig('valid_config.yml'));
+        $this->compile();
+
+        $this->assertContainerBuilderHasServiceDefinitionWithTag('zenstruck_backup.source.database', 'zenstruck_backup.source');
+        $this->assertContainerBuilderHasServiceDefinitionWithTag('zenstruck_backup.source.files', 'zenstruck_backup.source');
+        $this->assertContainerBuilderHasServiceDefinitionWithTag('zenstruck_backup.namer.simple', 'zenstruck_backup.namer');
+        $this->assertContainerBuilderHasServiceDefinitionWithTag('zenstruck_backup.namer.daily', 'zenstruck_backup.namer');
+        $this->assertContainerBuilderHasServiceDefinitionWithTag('zenstruck_backup.namer.snapshot', 'zenstruck_backup.namer');
+        $this->assertContainerBuilderHasServiceDefinitionWithTag('zenstruck_backup.processor.zip', 'zenstruck_backup.processor');
+        $this->assertContainerBuilderHasServiceDefinitionWithTag('zenstruck_backup.processor.gzip', 'zenstruck_backup.processor');
+        $this->assertContainerBuilderHasServiceDefinitionWithTag('zenstruck_backup.destination.s3', 'zenstruck_backup.destination');
+        $this->assertContainerBuilderHasServiceDefinitionWithTag('zenstruck_backup.destination.stream', 'zenstruck_backup.destination');
+        $this->assertContainerBuilderHasServiceDefinitionWithTag('zenstruck_backup.profile.daily', 'zenstruck_backup.profile');
+        $this->assertContainerBuilderHasServiceDefinitionWithTag('zenstruck_backup.profile.monthly', 'zenstruck_backup.profile');
+    }
+
+    /**
+     * @test
+     *
      * @dataProvider invalidConfigProvider
      */
-    public function testInvalidConfig($file, $message, $expectedException = '\LogicException')
+    public function compile_with_invalid_config($file, $message, $expectedException)
     {
         $this->setExpectedException($expectedException, $message);
 
@@ -48,13 +58,9 @@ class ZenstruckBackupExtensionTest extends AbstractExtensionTestCase
         $this->compile();
     }
 
-    public function invalidConfigProvider()
+    public static function invalidConfigProvider()
     {
         return array(
-            array('invalid_source.yml', 'Source "foo" is not defined.'),
-            array('invalid_namer.yml', 'Namer "foo" is not defined.'),
-            array('invalid_destination.yml', 'Destination "foo" is not defined.'),
-            array('invalid_processor.yml', 'Processor "foo" is not defined.'),
             array('invalid_profile_missing_sources.yml', 'The child node "sources" at path "zenstruck_backup.profiles.daily" must be configured.', 'Symfony\Component\Config\Definition\Exception\InvalidConfigurationException'),
             array('invalid_profile_missing_namer.yml', 'The child node "namer" at path "zenstruck_backup.profiles.daily" must be configured.', 'Symfony\Component\Config\Definition\Exception\InvalidConfigurationException'),
             array('invalid_profile_missing_destinations.yml', 'The child node "destinations" at path "zenstruck_backup.profiles.daily" must be configured.', 'Symfony\Component\Config\Definition\Exception\InvalidConfigurationException'),

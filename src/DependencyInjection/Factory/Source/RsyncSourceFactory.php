@@ -7,7 +7,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\DefinitionDecorator;
 use Symfony\Component\DependencyInjection\Reference;
 use Zenstruck\BackupBundle\DependencyInjection\Factory\Factory;
-use Zenstruck\BackupBundle\Source\RsyncSource;
+use Zenstruck\Backup\Source\RsyncSource;
 
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
@@ -27,15 +27,17 @@ class RsyncSourceFactory implements Factory
      */
     public function create(ContainerBuilder $container, $id, array $config)
     {
-        $id = sprintf('zenstruck_backup.source.%s', $id);
+        $serviceId = sprintf('zenstruck_backup.source.%s', $id);
 
-        $container->setDefinition($id, new DefinitionDecorator('zenstruck_backup.source.abstract_rsync'))
-            ->replaceArgument(0, $config['source'])
-            ->replaceArgument(1, $config['additional_options'])
-            ->replaceArgument(2, $config['default_options'])
+        $container->setDefinition($serviceId, new DefinitionDecorator('zenstruck_backup.source.abstract_rsync'))
+            ->replaceArgument(0, $id)
+            ->replaceArgument(1, $config['source'])
+            ->replaceArgument(2, $config['additional_options'])
+            ->replaceArgument(3, $config['default_options'])
+            ->addTag('zenstruck_backup.source')
         ;
 
-        return new Reference($id);
+        return new Reference($serviceId);
     }
 
     /**

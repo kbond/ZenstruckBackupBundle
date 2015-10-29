@@ -2,50 +2,33 @@
 
 namespace Zenstruck\BackupBundle\Command;
 
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Zenstruck\BackupBundle\BackupRegistry;
+use Zenstruck\Backup\Console\Command\BackupCommand as BaseBackupCommand;
+use Zenstruck\Backup\Console\Helper\BackupHelper;
 
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
  */
-class BackupCommand extends ContainerAwareCommand
+class BackupCommand extends BaseBackupCommand
 {
-    protected function configure()
-    {
-        $this
-            ->setName('zenstruck:backup')
-            ->setDescription('Run a backup')
-            ->addArgument('profile', InputArgument::OPTIONAL, 'The backup profile to run (leave blank for listing)')
-            ->addOption('clear', null, InputOption::VALUE_NONE, 'Set this flag to clear scratch directory before backup')
-        ;
-    }
-
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        /** @var BackupRegistry $registry */
-        $registry = $this->getContainer()->get('zenstruck_backup.registry');
+        /** @var Application $application */
+        $application = $this->getApplication();
 
-        if (!$profile = $input->getArgument('profile')) {
-            $this->listProfiles($output, $registry);
-
-            return;
+        if (!$application instanceof Application) {
+            throw new \RuntimeException('Application must be instance of Symfony\Bundle\FrameworkBundle\Console\Application');
         }
 
-        $manager = $registry->get($profile);
+        $container = $application->getKernel()->getContainer();
 
-        $manager->backup($input->getOption('clear'));
-    }
+        $this->getHelperSet()->set(new BackupHelper(
+            $container->get('zenstruck_backup.profile_registry'),
+            $container->get('zenstruck_backup.executor')
+        ));
 
-    private function listProfiles(OutputInterface $output, BackupRegistry $registry)
-    {
-        $output->writeln('<info>Available Profiles:</info>');
-
-        foreach ($registry->all() as $name => $profile) {
-            $output->writeln(' - '.$name);
-        }
+        parent::execute($input, $output);
     }
 }

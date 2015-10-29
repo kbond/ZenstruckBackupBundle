@@ -21,91 +21,56 @@ class ZenstruckBackupExtension extends Extension
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
-
-        $sources = array();
-        $namers = array();
-        $processors = array();
-        $destinations = array();
+        $loader->load('destinations.xml');
+        $loader->load('namers.xml');
+        $loader->load('processors.xml');
+        $loader->load('sources.xml');
 
         foreach ($config['sources'] as $name => $source) {
             reset($source);
 
-            $sources[$name] = $configuration
+            $configuration
                 ->getSourceFactory(key($source))
-                ->create($container, $name, reset($source))
-            ;
+                ->create($container, $name, reset($source));
         }
 
         foreach ($config['namers'] as $name => $namer) {
             reset($namer);
 
-            $namers[$name] = $configuration
+            $configuration
                 ->getNamerFactory(key($namer))
-                ->create($container, $name, reset($namer))
-            ;
+                ->create($container, $name, reset($namer));
         }
 
         foreach ($config['processors'] as $name => $processor) {
             reset($processor);
 
-            $processors[$name] = $configuration
+            $configuration
                 ->getProcessorFactory(key($processor))
-                ->create($container, $name, reset($processor))
-            ;
+                ->create($container, $name, reset($processor));
         }
 
         foreach ($config['destinations'] as $name => $destination) {
             reset($destination);
 
-            $destinations[$name] = $configuration
+            $configuration
                 ->getDestinationFactory(key($destination))
-                ->create($container, $name, reset($destination))
-            ;
+                ->create($container, $name, reset($destination));
         }
 
         foreach ($config['profiles'] as $name => $profile) {
-            $sourcesToAdd = array();
+            $definition = $container->setDefinition(
+                sprintf('zenstruck_backup.profile.%s', $name),
+                new DefinitionDecorator('zenstruck_backup.abstract_profile'));
 
-            // validate
-            foreach ($profile['sources'] as $source) {
-                if (!isset($sources[$source])) {
-                    throw new \LogicException(sprintf('Source "%s" is not defined.', $source));
-                }
-
-                $sourcesToAdd[] = $sources[$source];
-            }
-
-            if (!isset($namers[$profile['namer']])) {
-                throw new \LogicException(sprintf('Namer "%s" is not defined.', $profile['namer']));
-            }
-
-            $namerToAdd = $namers[$profile['namer']];
-
-            if (!isset($processors[$profile['processor']])) {
-                throw new \LogicException(sprintf('Processor "%s" is not defined.', $profile['processor']));
-            }
-
-            $processorToAdd = $processors[$profile['processor']];
-
-            $destinationsToAdd = array();
-
-            // validate
-            foreach ($profile['destinations'] as $destination) {
-                if (!isset($destinations[$destination])) {
-                    throw new \LogicException(sprintf('Destination "%s" is not defined.', $destination));
-                }
-
-                $destinationsToAdd[] = $destinations[$destination];
-            }
-
-            $container->setDefinition(sprintf('zenstruck_backup.manager.%s', $name), new DefinitionDecorator('zenstruck_backup.manager'))
-                ->replaceArgument(0, $profile['scratch_dir'])
-                ->replaceArgument(1, $processorToAdd)
-                ->replaceArgument(2, $namerToAdd)
-                ->replaceArgument(3, $sourcesToAdd)
-                ->replaceArgument(4, $destinationsToAdd)
-                ->addTag('zenstruck_backup.profile', array('alias' => $name))
-            ;
+            $definition
+                ->replaceArgument(0, $name)
+                ->replaceArgument(1, $profile['scratch_dir'])
+                ->replaceArgument(2, $profile['processor'])
+                ->replaceArgument(3, $profile['namer'])
+                ->replaceArgument(4, $profile['sources'])
+                ->replaceArgument(5, $profile['destinations'])
+                ->addTag('zenstruck_backup.profile');
         }
     }
 

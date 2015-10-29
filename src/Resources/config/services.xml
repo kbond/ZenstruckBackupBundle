@@ -5,62 +5,33 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-        <!-- Registry -->
-        <service id="zenstruck_backup.registry" class="Zenstruck\BackupBundle\BackupRegistry" />
+        <!-- ProfileRegistry -->
+        <service id="zenstruck_backup.profile_registry" class="Zenstruck\Backup\ProfileRegistry" />
 
-        <!-- Manager -->
-        <service id="zenstruck_backup.manager" class="Zenstruck\BackupBundle\BackupManager" abstract="true" public="false">
-            <argument /> <!-- scratchDir -->
-            <argument /> <!-- processor -->
-            <argument /> <!-- namer -->
-            <argument /> <!-- sources -->
-            <argument /> <!-- destinations -->
+        <!-- ProfileBuilder -->
+        <service id="zenstruck_backup.profile_builder" class="Zenstruck\Backup\ProfileBuilder" public="false" />
+
+        <!-- Executor -->
+        <service id="zenstruck_backup.executor" class="Zenstruck\Backup\Executor">
             <argument type="service" id="logger" />
             <tag name="monolog.logger" channel="backup" />
         </service>
 
-        <!-- Sources -->
-        <service id="zenstruck_backup.source.abstract_mysqldump" class="Zenstruck\BackupBundle\Source\MySqlDumpSource" abstract="true" public="false">
-            <argument /> <!-- database -->
-            <argument /> <!-- host -->
-            <argument /> <!-- user -->
-            <argument /> <!-- password -->
-            <argument /> <!-- ssh_host -->
-            <argument /> <!-- ssh_user -->
-            <argument /> <!-- ssh_port -->
-        </service>
-        <service id="zenstruck_backup.source.abstract_rsync" class="Zenstruck\BackupBundle\Source\RsyncSource" abstract="true" public="false">
-            <argument /> <!-- source -->
-            <argument /> <!-- additional_options -->
-            <argument /> <!-- default_options -->
-        </service>
-
-        <!-- Namers -->
-        <service id="zenstruck_backup.namer.abstract_simple" class="Zenstruck\BackupBundle\Namer\SimpleNamer" abstract="true" public="false">
+        <!-- Abstract Profile -->
+        <service
+            id="zenstruck_backup.abstract_profile"
+            class="Zenstruck\Backup\Profile"
+            abstract="true"
+            public="false"
+            factory-service="zenstruck_backup.profile_builder"
+            factory-method="create"
+        >
             <argument /> <!-- name -->
-        </service>
-        <service id="zenstruck_backup.namer.abstract_timestamp" class="Zenstruck\BackupBundle\Namer\TimestampNamer" abstract="true" public="false">
-            <argument /> <!-- format -->
-            <argument /> <!-- prefix -->
-            <argument /> <!-- timezone -->
-        </service>
-
-        <!-- Processors -->
-        <service id="zenstruck_backup.processor.abstract_zip" class="Zenstruck\BackupBundle\Processor\ZipArchiveProcessor" abstract="true" public="false">
-            <argument /> <!-- options -->
-        </service>
-        <service id="zenstruck_backup.processor.abstract_gzip" class="Zenstruck\BackupBundle\Processor\GzipArchiveProcessor" abstract="true" public="false">
-            <argument /> <!-- options -->
-        </service>
-
-        <!-- Destinations -->
-        <service id="zenstruck_backup.destination.abstract_stream" class="Zenstruck\BackupBundle\Destination\StreamDestination" abstract="true" public="false">
-            <argument /> <!-- directory -->
-        </service>
-        <service id="zenstruck_backup.destination.abstract_s3cmd" class="Zenstruck\BackupBundle\Destination\S3CmdDestination" abstract="true" public="false">
-            <argument /> <!-- bucket -->
-            <argument /> <!-- timeout -->
-            <argument /> <!-- options -->
+            <argument /> <!-- scratchDir -->
+            <argument /> <!-- processor -->
+            <argument /> <!-- namer -->
+            <argument type="collection" /> <!-- sources -->
+            <argument type="collection" /> <!-- destinations -->
         </service>
     </services>
 </container>

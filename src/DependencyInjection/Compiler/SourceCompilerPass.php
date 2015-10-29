@@ -5,14 +5,14 @@ namespace Zenstruck\BackupBundle\DependencyInjection\Compiler;
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
  */
-class ProfileCompilerPass extends RegisterCompilerPass
+class SourceCompilerPass extends RegisterCompilerPass
 {
     /**
      * {@inheritdoc}
      */
     protected function getDefinitionName()
     {
-        return 'zenstruck_backup.profile_registry';
+        return 'zenstruck_backup.profile_builder';
     }
 
     /**
@@ -20,7 +20,7 @@ class ProfileCompilerPass extends RegisterCompilerPass
      */
     protected function getTagName()
     {
-        return 'zenstruck_backup.profile';
+        return 'zenstruck_backup.source';
     }
 
     /**
@@ -28,6 +28,6 @@ class ProfileCompilerPass extends RegisterCompilerPass
      */
     protected function getMethodName()
     {
-        return 'add';
+        return 'addSource';
     }
 }
