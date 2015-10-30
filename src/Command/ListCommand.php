@@ -5,14 +5,17 @@ namespace Zenstruck\BackupBundle\Command;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Zenstruck\Backup\Console\Command\BackupCommand as BaseBackupCommand;
+use Zenstruck\Backup\Console\Command\ListCommand as BaseListCommand;
 use Zenstruck\Backup\Console\Helper\BackupHelper;
 
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
  */
-class BackupCommand extends BaseBackupCommand
+class ListCommand extends BaseListCommand
 {
+    /**
+     * {@inheritdoc}
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         /** @var Application $application */

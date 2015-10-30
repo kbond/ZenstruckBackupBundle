@@ -6,14 +6,14 @@ use Psr\Log\NullLogger;
 use Symfony\Bundle\FrameworkBundle\Console\Application as FrameworkApplication;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
+use Zenstruck\Backup\Console\Command\ProfileActionCommand;
 use Zenstruck\Backup\Executor;
 use Zenstruck\Backup\ProfileRegistry;
-use Zenstruck\BackupBundle\Command\BackupCommand;
 
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
  */
-class BackupCommandTest extends \PHPUnit_Framework_TestCase
+abstract class ProfileActionCommandTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @test
@@ -38,10 +38,10 @@ class BackupCommandTest extends \PHPUnit_Framework_TestCase
             ->willReturn($container);
 
         $application = new FrameworkApplication($kernel);
-        $application->add(new BackupCommand());
+        $application->add($this->createCommand());
 
-        $tester = new CommandTester($application->find('zenstruck:backup'));
-        $tester->execute(array('command' => 'zenstruck:backup'));
+        $tester = new CommandTester($application->find($this->getCommandName()));
+        $tester->execute(array('command' => $this->getCommandName()));
     }
 
     /**
@@ -53,9 +53,19 @@ class BackupCommandTest extends \PHPUnit_Framework_TestCase
     public function it_fails_with_wrong_application()
     {
         $application = new Application($this->getMock('Symfony\Component\DependencyInjection\ContainerInterface'));
-        $application->add(new BackupCommand());
+        $application->add($this->createCommand());
 
-        $tester = new CommandTester($application->find('zenstruck:backup'));
-        $tester->execute(array('command' => 'zenstruck:backup'));
+        $tester = new CommandTester($application->find($this->getCommandName()));
+        $tester->execute(array('command' => $this->getCommandName()));
     }
+
+    /**
+     * @return ProfileActionCommand
+     */
+    abstract protected function createCommand();
+
+    /**
+     * @return string
+     */
+    abstract protected function getCommandName();
 }
