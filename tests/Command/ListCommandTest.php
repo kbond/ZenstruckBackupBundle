@@ -24,5 +24,4 @@ class ListCommandTest extends ProfileActionCommandTest
     {
         return 'zenstruck:backup:list';
     }
-
 }
