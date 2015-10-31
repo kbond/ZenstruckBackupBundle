@@ -12,7 +12,7 @@
         }
     ],
     "require": {
-        "zenstruck/backup": "dev-master",
+        "zenstruck/backup": "~1.0",
         "symfony/framework-bundle": "~2.3|~3.0"
     },
     "require-dev": {

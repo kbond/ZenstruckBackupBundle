@@ -8,13 +8,8 @@
 [![Latest Stable Version](http://img.shields.io/packagist/v/zenstruck/backup-bundle.svg?style=flat-square)](https://packagist.org/packages/zenstruck/backup-bundle)
 [![License](http://img.shields.io/packagist/l/zenstruck/backup-bundle.svg?style=flat-square)](https://packagist.org/packages/zenstruck/backup-bundle)
 
-This bundle acts as a wrapper for backing up your Symfony application. A backup "profile" has 3 parts:
-
-1. **Source**: What to backup (ie database/files). This step fetches files and copies them to a "scratch"
-directory. These files are typically persisted between backups (improves rsync performance) but can be
-cleared with the command's `--clear` flag.
-2. **Processor**: Convert to a single file (ie zip/tar.gz).  This step uses a **Namer** to name the file.
-3. **Destination**: Where to send the backup (ie filesystem/S3).
+This bundle allows creating and managing backups in a Symfony application. It is a wrapper for
+[zenstruck/backup](https://github.com/kbond/php-backup).
 
 ## Installation
 
@@ -76,11 +71,13 @@ zenstruck_backup:
             destinations: [s3]
 ```
 
-## Backup Command
+## Commands
+
+### Run Backup Command
 
 ```
 Usage:
- zenstruck:backup [--clear] profile
+ zenstruck:backup:run [--clear] profile
 
 Arguments:
  profile  The backup profile to run
@@ -95,11 +92,11 @@ Examples (with the above configuration):
 
 * Create a backup at: `s3://foobar/backups/mysite-{day-of-month}`
 
-        app/console zenstruck:backup daily
+        app/console zenstruck:backup:run daily
 
 * Create a backup at: `s3://foobar/backups/mysite-{YYYYMMDDHHMMSS}`
 
-        app/console zenstruck:backup snapshot
+        app/console zenstruck:backup:run snapshot
 
 ## Full Default Config
 
@@ -151,6 +148,8 @@ zenstruck_backup:
         name:
             stream:
                 directory:            ~ # Required
+            flysystem:
+                filesystem_service:   ~ # Required
             s3cmd:
                 bucket:               ~ # Required, Example: s3://foobar/backups
                 timeout:              300

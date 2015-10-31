@@ -33,6 +33,9 @@
         <service id="zenstruck_backup.destination_factory.stream" class="Zenstruck\BackupBundle\DependencyInjection\Factory\Destination\StreamDestinationFactory" public="false">
             <tag name="zenstruck_backup.destination_factory" />
         </service>
+        <service id="zenstruck_backup.destination_factory.flysystem" class="Zenstruck\BackupBundle\DependencyInjection\Factory\Destination\FlysystemDestinationFactory" public="false">
+            <tag name="zenstruck_backup.destination_factory" />
+        </service>
         <service id="zenstruck_backup.destination_factory.s3cmd" class="Zenstruck\BackupBundle\DependencyInjection\Factory\Destination\S3CmdDestinationFactory" public="false">
             <tag name="zenstruck_backup.destination_factory" />
         </service>

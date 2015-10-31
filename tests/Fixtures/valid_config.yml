@@ -21,6 +21,9 @@ processors:
     zip: { zip: ~ }
     gzip: { gzip: ~ }
 destinations:
+    flysystem:
+        flysystem:
+            filesystem_service: foo
     s3:
         s3cmd:
             bucket: "s3://foobar/backups"
