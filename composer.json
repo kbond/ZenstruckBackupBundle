@@ -18,7 +18,8 @@
     "require-dev": {
         "symfony/console": "~2.3|~3.0",
         "symfony/yaml": "~2.3|~3.0",
-        "matthiasnoback/symfony-dependency-injection-test": "^0.7.4"
+        "matthiasnoback/symfony-dependency-injection-test": "^0.7.4",
+        "sllh/php-cs-fixer-styleci-bridge": "~1.4"
     },
     "autoload": {
         "psr-4": { "Zenstruck\\BackupBundle\\": "src/" }
