@@ -86,7 +86,10 @@ Options:
  --clear  Set this flag to clear scratch directory before backup
 ```
 
-**NOTE**: add `-vv` to see the log.
+**NOTES**:
+
+1. Add `-vv` to see the log.
+2. For long running backups, it may be required to increase the `memory_limit` in your `app/console`/`bin/console`.
 
 Examples (with the above configuration):
 
