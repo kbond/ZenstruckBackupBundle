@@ -77,10 +77,10 @@ zenstruck_backup:
 
 ```
 Usage:
- zenstruck:backup:run [--clear] profile
+ zenstruck:backup:run [--clear] [<profile>]
 
 Arguments:
- profile  The backup profile to run
+ profile  The backup profile to run (leave blank for listing)
 
 Options:
  --clear  Set this flag to clear scratch directory before backup
@@ -90,6 +90,7 @@ Options:
 
 1. Add `-vv` to see the log.
 2. For long running backups, it may be required to increase the `memory_limit` in your `app/console`/`bin/console`.
+3. Running the command without a profile will list available profiles.
 
 Examples (with the above configuration):
 
@@ -100,6 +101,18 @@ Examples (with the above configuration):
 * Create a backup at: `s3://foobar/backups/mysite-{YYYYMMDDHHMMSS}`
 
         app/console zenstruck:backup:run snapshot
+
+### List Existing Backups
+
+```
+Usage:
+  zenstruck:backup:list [<profile>]
+
+Arguments:
+  profile  The backup profile to list backups for (leave blank for listing)
+```
+
+**NOTE**: Running the command without a profile will list available profiles.
 
 ## Full Default Config
 
