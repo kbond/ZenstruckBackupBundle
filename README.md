@@ -134,21 +134,26 @@ zenstruck_backup:
         name:
             zip:
                 options:              '-r'
+                timeout:              300
             gzip:
                 options:              '-czvf'
+                timeout:              300
     sources:
 
         # Prototype
         name:
             mysqldump:
                 database:             ~ # Required
+                host:                 ~
                 user:                 root
                 password:             null
                 ssh_host:             null
                 ssh_user:             null
                 ssh_port:             22
+                timeout:              300
             rsync:
                 source:               ~ # Required
+                timeout:              300
                 additional_options:   []
                 default_options:
 
@@ -178,5 +183,4 @@ zenstruck_backup:
             namer:                ~  # Required
             processor:            ~  # Required
             destinations:         [] # Required, can be a string
-            destination:          ~  # ** Deprecated ** - Use "destinations" instead
 ```

@@ -34,6 +34,7 @@ class RsyncSourceFactory implements Factory
             ->replaceArgument(1, $config['source'])
             ->replaceArgument(2, $config['additional_options'])
             ->replaceArgument(3, $config['default_options'])
+            ->replaceArgument(4, $config['timeout'])
             ->addTag('zenstruck_backup.source')
         ;
 
@@ -55,6 +56,7 @@ class RsyncSourceFactory implements Factory
                     ->prototype('scalar')->end()
                     ->defaultValue(RsyncSource::getDefaultOptions())
                 ->end()
+                ->integerNode('timeout')->defaultValue(RsyncSource::DEFAULT_TIMEOUT)->end()
             ->end()
         ;
     }

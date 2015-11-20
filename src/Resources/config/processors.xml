@@ -8,10 +8,12 @@
         <service id="zenstruck_backup.processor.abstract_zip" class="Zenstruck\Backup\Processor\ZipArchiveProcessor" abstract="true" public="false">
             <argument /> <!-- name -->
             <argument type="collection" /> <!-- options -->
+            <argument /> <!-- timeout -->
         </service>
         <service id="zenstruck_backup.processor.abstract_gzip" class="Zenstruck\Backup\Processor\GzipArchiveProcessor" abstract="true" public="false">
             <argument /> <!-- name -->
             <argument type="collection" /> <!-- options -->
+            <argument /> <!-- timeout -->
         </service>
     </services>
 </container>
