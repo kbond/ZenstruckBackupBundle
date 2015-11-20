@@ -14,12 +14,14 @@
             <argument /> <!-- ssh_host -->
             <argument /> <!-- ssh_user -->
             <argument /> <!-- ssh_port -->
+            <argument /> <!-- timeout -->
         </service>
         <service id="zenstruck_backup.source.abstract_rsync" class="Zenstruck\Backup\Source\RsyncSource" abstract="true" public="false">
             <argument /> <!-- name -->
             <argument /> <!-- source -->
             <argument type="collection" /> <!-- additional_options -->
             <argument type="collection" /> <!-- default_options -->
+            <argument /> <!-- timeout -->
         </service>
     </services>
 </container>

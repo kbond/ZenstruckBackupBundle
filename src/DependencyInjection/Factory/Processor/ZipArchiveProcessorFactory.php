@@ -32,6 +32,7 @@ class ZipArchiveProcessorFactory implements Factory
         $container->setDefinition($serviceId, new DefinitionDecorator('zenstruck_backup.processor.abstract_zip'))
             ->replaceArgument(0, $id)
             ->replaceArgument(1, $config['options'])
+            ->replaceArgument(2, $config['timeout'])
             ->addTag('zenstruck_backup.processor')
         ;
 
@@ -46,6 +47,7 @@ class ZipArchiveProcessorFactory implements Factory
         $builder
             ->children()
                 ->scalarNode('options')->defaultValue(ZipArchiveProcessor::DEFAULT_OPTIONS)->end()
+                ->integerNode('timeout')->defaultValue(ZipArchiveProcessor::DEFAULT_TIMEOUT)->end()
             ->end()
         ;
     }

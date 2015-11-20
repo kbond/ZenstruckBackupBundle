@@ -38,6 +38,7 @@ class MySqlDumpSourceFactory implements Factory
             ->replaceArgument(5, $config['ssh_host'])
             ->replaceArgument(6, $config['ssh_user'])
             ->replaceArgument(7, $config['ssh_port'])
+            ->replaceArgument(8, $config['timeout'])
             ->addTag('zenstruck_backup.source')
         ;
 
@@ -58,6 +59,7 @@ class MySqlDumpSourceFactory implements Factory
                 ->scalarNode('ssh_host')->defaultNull()->end()
                 ->scalarNode('ssh_user')->defaultNull()->end()
                 ->scalarNode('ssh_port')->defaultValue(MySqlDumpSource::DEFAULT_SSH_PORT)->end()
+                ->integerNode('timeout')->defaultValue(MySqlDumpSource::DEFAULT_TIMEOUT)->end()
             ->end()
         ;
     }
