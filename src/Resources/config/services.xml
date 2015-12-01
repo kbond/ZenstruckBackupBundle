@@ -23,8 +23,6 @@
             class="Zenstruck\Backup\Profile"
             abstract="true"
             public="false"
-            factory-service="zenstruck_backup.profile_builder"
-            factory-method="create"
         >
             <argument /> <!-- name -->
             <argument /> <!-- scratchDir -->

@@ -6,6 +6,7 @@ use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\DefinitionDecorator;
 use Symfony\Component\DependencyInjection\Loader;
+use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Zenstruck\BackupBundle\DependencyInjection\Factory\Factory;
 
@@ -25,6 +26,22 @@ class ZenstruckBackupExtension extends Extension
         $loader->load('namers.xml');
         $loader->load('processors.xml');
         $loader->load('sources.xml');
+
+        $abstractProfile = $container->getDefinition('zenstruck_backup.abstract_profile');
+
+        if (method_exists($abstractProfile, 'setFactory')) {
+            // 2.6+
+            $abstractProfile->setFactory(array(
+                new Reference('zenstruck_backup.profile_builder'),
+                'create'
+            ));
+        } else {
+            // <2.6
+            $abstractProfile->setFactoryService('zenstruck_backup.profile_builder')
+                ->setFactoryMethod('create');
+        }
+
+        $container->setDefinition('zenstruck_backup.abstract_profile', $abstractProfile);
 
         foreach ($config['sources'] as $name => $source) {
             reset($source);
