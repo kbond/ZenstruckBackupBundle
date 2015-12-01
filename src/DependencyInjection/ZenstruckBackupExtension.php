@@ -31,10 +31,7 @@ class ZenstruckBackupExtension extends Extension
 
         if (method_exists($abstractProfile, 'setFactory')) {
             // 2.6+
-            $abstractProfile->setFactory(array(
-                new Reference('zenstruck_backup.profile_builder'),
-                'create'
-            ));
+            $abstractProfile->setFactory(array(new Reference('zenstruck_backup.profile_builder'), 'create'));
         } else {
             // <2.6
             $abstractProfile->setFactoryService('zenstruck_backup.profile_builder')
