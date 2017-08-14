@@ -11,7 +11,7 @@
         </service>
         <service id="zenstruck_backup.destination.abstract_flysystem" class="Zenstruck\Backup\Destination\FlysystemDestination" abstract="true" public="false">
             <argument /> <!-- name -->
-            <argument type="service" /> <!-- filesystem_service -->
+            <argument /> <!-- filesystem_service -->
         </service>
         <service id="zenstruck_backup.destination.abstract_s3cmd" class="Zenstruck\Backup\Destination\S3CmdDestination" abstract="true" public="false">
             <argument /> <!-- name -->
