@@ -26,16 +26,20 @@ abstract class ProfileActionCommandTest extends \PHPUnit_Framework_TestCase
         $registry = new ProfileRegistry();
         $executor = new Executor(new NullLogger());
 
-        $container = $this->getMock('Symfony\Component\DependencyInjection\ContainerInterface');
+        $container = $this->createMock('Symfony\Component\DependencyInjection\ContainerInterface');
         $container->expects($this->exactly(2))
             ->method('get')
             ->withConsecutive(array('zenstruck_backup.profile_registry'), array('zenstruck_backup.executor'))
             ->willReturnOnConsecutiveCalls($registry, $executor);
 
-        $kernel = $this->getMock('Symfony\Component\HttpKernel\KernelInterface');
-        $kernel->expects($this->once())
+        $kernel = $this->createMock('Symfony\Component\HttpKernel\KernelInterface');
+        $kernel->expects($this->any())
             ->method('getContainer')
             ->willReturn($container);
+
+        $kernel->expects($this->any())
+            ->method('getBundles')
+            ->willReturn(array());
 
         $application = new FrameworkApplication($kernel);
         $application->add($this->createCommand());
@@ -52,7 +56,7 @@ abstract class ProfileActionCommandTest extends \PHPUnit_Framework_TestCase
      */
     public function it_fails_with_wrong_application()
     {
-        $application = new Application($this->getMock('Symfony\Component\DependencyInjection\ContainerInterface'));
+        $application = new Application($this->createMock('Symfony\Component\DependencyInjection\ContainerInterface'));
         $application->add($this->createCommand());
 
         $tester = new CommandTester($application->find($this->getCommandName()));

@@ -54,7 +54,9 @@ class Configuration implements ConfigurationInterface
                                 ->prototype('scalar')->end()
                                 ->beforeNormalization()
                                     ->ifString()
-                                    ->then(function ($v) { return array($v); })
+                                    ->then(function ($v) {
+                                        return array($v);
+                                    })
                                 ->end()
                             ->end()
                             ->scalarNode('namer')->isRequired()->end()
@@ -65,7 +67,9 @@ class Configuration implements ConfigurationInterface
                                 ->prototype('scalar')->end()
                                 ->beforeNormalization()
                                     ->ifString()
-                                    ->then(function ($v) { return array($v); })
+                                    ->then(function ($v) {
+                                        return array($v);
+                                    })
                                 ->end()
                             ->end()
                         ->end()
@@ -132,7 +136,9 @@ class Configuration implements ConfigurationInterface
                     ->prototype('array')
                         ->canBeUnset()
                         ->validate()
-                            ->ifTrue(function ($v) { return count($v) > 1; })
+                            ->ifTrue(function ($v) {
+                                return count($v) > 1;
+                            })
                             ->thenInvalid(sprintf('Can only have 1 %s per configuration.', $singular))
                         ->end()
                         ->children()
