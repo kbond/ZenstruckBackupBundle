@@ -5,6 +5,13 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
+        <service id="Zenstruck\BackupBundle\Command\ListCommand">
+            <tag name="console.command" />
+        </service>
+        <service id="Zenstruck\BackupBundle\Command\RunCommand">
+            <tag name="console.command" />
+        </service>
+
         <!-- ProfileRegistry -->
         <service id="zenstruck_backup.profile_registry" class="Zenstruck\Backup\ProfileRegistry" />
 
