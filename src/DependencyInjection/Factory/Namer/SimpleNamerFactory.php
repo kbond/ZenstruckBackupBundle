@@ -4,7 +4,7 @@ namespace Zenstruck\BackupBundle\DependencyInjection\Factory\Namer;
 
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\DefinitionDecorator;
+use Symfony\Component\DependencyInjection\ChildDefinition;
 use Symfony\Component\DependencyInjection\Reference;
 use Zenstruck\BackupBundle\DependencyInjection\Factory\Factory;
 use Zenstruck\Backup\Namer\SimpleNamer;
@@ -29,7 +29,7 @@ class SimpleNamerFactory implements Factory
     {
         $serviceId = sprintf('zenstruck_backup.namer.%s', $id);
 
-        $container->setDefinition($serviceId, new DefinitionDecorator('zenstruck_backup.namer.abstract_simple'))
+        $container->setDefinition($serviceId, new ChildDefinition('zenstruck_backup.namer.abstract_simple'))
             ->replaceArgument(0, $config['name'])
             ->addTag('zenstruck_backup.namer')
         ;

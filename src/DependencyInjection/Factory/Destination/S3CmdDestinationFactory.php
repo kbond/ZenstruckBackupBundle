@@ -4,7 +4,7 @@ namespace Zenstruck\BackupBundle\DependencyInjection\Factory\Destination;
 
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\DefinitionDecorator;
+use Symfony\Component\DependencyInjection\ChildDefinition;
 use Symfony\Component\DependencyInjection\Reference;
 use Zenstruck\BackupBundle\DependencyInjection\Factory\Factory;
 use Zenstruck\Backup\Destination\S3CmdDestination;
@@ -29,7 +29,7 @@ class S3CmdDestinationFactory implements Factory
     {
         $serviceId = sprintf('zenstruck_backup.destination.%s', $id);
 
-        $container->setDefinition($serviceId, new DefinitionDecorator('zenstruck_backup.destination.abstract_s3cmd'))
+        $container->setDefinition($serviceId, new ChildDefinition('zenstruck_backup.destination.abstract_s3cmd'))
             ->replaceArgument(0, $id)
             ->replaceArgument(1, $config['bucket'])
             ->replaceArgument(2, $config['timeout'])

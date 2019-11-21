@@ -3,8 +3,8 @@
 namespace Zenstruck\BackupBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\ChildDefinition;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\DefinitionDecorator;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
@@ -75,7 +75,7 @@ class ZenstruckBackupExtension extends Extension
         foreach ($config['profiles'] as $name => $profile) {
             $definition = $container->setDefinition(
                 sprintf('zenstruck_backup.profile.%s', $name),
-                new DefinitionDecorator('zenstruck_backup.abstract_profile'));
+                new ChildDefinition('zenstruck_backup.abstract_profile'));
 
             $definition
                 ->replaceArgument(0, $name)
