@@ -33,8 +33,14 @@ class Configuration implements ConfigurationInterface
 
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('zenstruck_backup');
+        $treeBuilder = new TreeBuilder('zenstruck_backup');
+
+        // Keep compatibility with symfony/config < 4.2
+        if (\method_exists($treeBuilder, 'getRootNode')) {
+            $rootNode = $treeBuilder->getRootNode();
+        } else {
+            $rootNode = $treeBuilder->root('zenstruck_backup');
+        }
 
         $this->addFactories($rootNode, 'namers', 'namer', $this->namerFactories);
         $this->addFactories($rootNode, 'processors', 'processor', $this->processorFactories);
