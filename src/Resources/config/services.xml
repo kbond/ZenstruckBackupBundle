@@ -13,13 +13,13 @@
         </service>
 
         <!-- ProfileRegistry -->
-        <service id="zenstruck_backup.profile_registry" class="Zenstruck\Backup\ProfileRegistry" />
+        <service id="zenstruck_backup.profile_registry" class="Zenstruck\Backup\ProfileRegistry" public="true" />
 
         <!-- ProfileBuilder -->
         <service id="zenstruck_backup.profile_builder" class="Zenstruck\Backup\ProfileBuilder" public="false" />
 
         <!-- Executor -->
-        <service id="zenstruck_backup.executor" class="Zenstruck\Backup\Executor">
+        <service id="zenstruck_backup.executor" class="Zenstruck\Backup\Executor" public="true">
             <argument type="service" id="logger" />
             <tag name="monolog.logger" channel="backup" />
         </service>
