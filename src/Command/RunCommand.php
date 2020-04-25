@@ -32,6 +32,6 @@ class RunCommand extends BaseRunCommand
             $container->get('zenstruck_backup.executor')
         ));
 
-        parent::execute($input, $output);
+        return parent::execute($input, $output);
     }
 }
