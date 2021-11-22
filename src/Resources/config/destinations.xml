@@ -19,5 +19,11 @@
             <argument /> <!-- timeout -->
             <argument type="collection" /> <!-- options -->
         </service>
+        <service id="zenstruck_backup.destination.abstract_aws_cli_s3" class="Zenstruck\Backup\Destination\AwsCliS3Destination" abstract="true" public="false">
+            <argument /> <!-- name -->
+            <argument /> <!-- bucket -->
+            <argument /> <!-- timeout -->
+            <argument type="collection" /> <!-- options -->
+        </service>
     </services>
 </container>
