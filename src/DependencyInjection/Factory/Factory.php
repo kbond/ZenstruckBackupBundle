@@ -25,5 +25,5 @@ interface Factory
     /**
      * Adds configuration nodes for the factory.
      */
-    public function addConfiguration(ArrayNodeDefinition $builder);
+    public function addConfiguration(ArrayNodeDefinition $builder): void;
 }

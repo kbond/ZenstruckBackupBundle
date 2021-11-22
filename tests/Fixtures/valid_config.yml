@@ -30,6 +30,9 @@ destinations:
     stream:
         stream:
             directory: /foo
+    s3_alt:
+        aws_cli_s3:
+            bucket: "s3://foobar/backups"
 profiles:
     daily:
         scratch_dir: "%kernel.project_dir%/cache/backup"

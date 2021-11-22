@@ -35,7 +35,7 @@ class RsyncSourceFactory implements Factory
         return new Reference($serviceId);
     }
 
-    public function addConfiguration(ArrayNodeDefinition $builder)
+    public function addConfiguration(ArrayNodeDefinition $builder): void
     {
         $builder
             ->children()

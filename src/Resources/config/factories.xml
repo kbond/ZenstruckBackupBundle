@@ -39,5 +39,8 @@
         <service id="zenstruck_backup.destination_factory.s3cmd" class="Zenstruck\BackupBundle\DependencyInjection\Factory\Destination\S3CmdDestinationFactory" public="false">
             <tag name="zenstruck_backup.destination_factory" />
         </service>
+        <service id="zenstruck_backup.destination_factory.aws_cli_s3" class="Zenstruck\BackupBundle\DependencyInjection\Factory\Destination\AwsCliS3DestinationFactory" public="false">
+            <tag name="zenstruck_backup.destination_factory" />
+        </service>
     </services>
 </container>
