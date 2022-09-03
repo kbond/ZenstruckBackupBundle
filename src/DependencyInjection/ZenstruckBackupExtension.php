@@ -3,8 +3,8 @@
 namespace Zenstruck\BackupBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\ChildDefinition;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\DefinitionDecorator;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
@@ -15,6 +15,9 @@ use Zenstruck\BackupBundle\DependencyInjection\Factory\Factory;
  */
 class ZenstruckBackupExtension extends Extension
 {
+    /**
+     * @noinspection PhpUnhandledExceptionInspection
+     */
     public function load(array $configs, ContainerBuilder $container)
     {
         $configuration = $this->getConfiguration($configs, $container);
@@ -28,15 +31,7 @@ class ZenstruckBackupExtension extends Extension
         $loader->load('sources.xml');
 
         $abstractProfile = $container->getDefinition('zenstruck_backup.abstract_profile');
-
-        if (method_exists($abstractProfile, 'setFactory')) {
-            // 2.6+
-            $abstractProfile->setFactory(array(new Reference('zenstruck_backup.profile_builder'), 'create'));
-        } else {
-            // <2.6
-            $abstractProfile->setFactoryService('zenstruck_backup.profile_builder')
-                ->setFactoryMethod('create');
-        }
+        $abstractProfile->setFactory(array(new Reference('zenstruck_backup.profile_builder'), 'create'));
 
         $container->setDefinition('zenstruck_backup.abstract_profile', $abstractProfile);
 
@@ -75,7 +70,7 @@ class ZenstruckBackupExtension extends Extension
         foreach ($config['profiles'] as $name => $profile) {
             $definition = $container->setDefinition(
                 sprintf('zenstruck_backup.profile.%s', $name),
-                new DefinitionDecorator('zenstruck_backup.abstract_profile'));
+                new ChildDefinition('zenstruck_backup.abstract_profile'));
 
             $definition
                 ->replaceArgument(0, $name)
@@ -89,12 +84,9 @@ class ZenstruckBackupExtension extends Extension
     }
 
     /**
-     * @param array            $config
-     * @param ContainerBuilder $container
-     *
-     * @return Configuration
+     * @throws \Exception
      */
-    public function getConfiguration(array $config, ContainerBuilder $container)
+    public function getConfiguration(array $config, ContainerBuilder $container): Configuration
     {
         $tempContainer = new ContainerBuilder();
 
@@ -110,12 +102,11 @@ class ZenstruckBackupExtension extends Extension
     }
 
     /**
-     * @param string           $tag
-     * @param ContainerBuilder $container
-     *
      * @return Factory[]
+     * @throws \Exception
+     * @throws \Exception
      */
-    private function getServices($tag, ContainerBuilder $container)
+    private function getServices(string $tag, ContainerBuilder $container): array
     {
         $services = array();
 

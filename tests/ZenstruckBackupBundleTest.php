@@ -2,12 +2,18 @@
 
 namespace Zenstruck\BackupBundle\Tests;
 
+use PHPUnit\Framework\TestCase;
+use Zenstruck\BackupBundle\DependencyInjection\Compiler\DestinationCompilerPass;
+use Zenstruck\BackupBundle\DependencyInjection\Compiler\NamerCompilerPass;
+use Zenstruck\BackupBundle\DependencyInjection\Compiler\ProcessorCompilerPass;
+use Zenstruck\BackupBundle\DependencyInjection\Compiler\ProfileCompilerPass;
+use Zenstruck\BackupBundle\DependencyInjection\Compiler\SourceCompilerPass;
 use Zenstruck\BackupBundle\ZenstruckBackupBundle;
 
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
  */
-class ZenstruckBackupBundleTest extends \PHPUnit_Framework_TestCase
+class ZenstruckBackupBundleTest extends TestCase
 {
     /**
      * @test
@@ -23,11 +29,11 @@ class ZenstruckBackupBundleTest extends \PHPUnit_Framework_TestCase
             ->expects($this->exactly(5))
             ->method('addCompilerPass')
             ->withConsecutive(
-                $this->isInstanceOf('Zenstruck\BackupBundle\DependencyInjection\Compiler\ProfileCompilerPass'),
-                $this->isInstanceOf('Zenstruck\BackupBundle\DependencyInjection\Compiler\DestinationCompilerPass'),
-                $this->isInstanceOf('Zenstruck\BackupBundle\DependencyInjection\Compiler\SourceCompilerPass'),
-                $this->isInstanceOf('Zenstruck\BackupBundle\DependencyInjection\Compiler\ProcessorCompilerPass'),
-                $this->isInstanceOf('Zenstruck\BackupBundle\DependencyInjection\Compiler\NamerCompilerPass')
+                [$this->isInstanceOf(ProfileCompilerPass::class)],
+                [$this->isInstanceOf(DestinationCompilerPass::class)],
+                [$this->isInstanceOf(SourceCompilerPass::class)],
+                [$this->isInstanceOf(ProcessorCompilerPass::class)],
+                [$this->isInstanceOf(NamerCompilerPass::class)]
             );
 
         $bundle = new ZenstruckBackupBundle();

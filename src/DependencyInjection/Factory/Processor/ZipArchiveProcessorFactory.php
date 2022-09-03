@@ -3,9 +3,10 @@
 namespace Zenstruck\BackupBundle\DependencyInjection\Factory\Processor;
 
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
+use Symfony\Component\DependencyInjection\ChildDefinition;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\DefinitionDecorator;
 use Symfony\Component\DependencyInjection\Reference;
+use Zenstruck\Backup\Processor\ArchiveProcessor;
 use Zenstruck\BackupBundle\DependencyInjection\Factory\Factory;
 use Zenstruck\Backup\Processor\ZipArchiveProcessor;
 
@@ -14,10 +15,7 @@ use Zenstruck\Backup\Processor\ZipArchiveProcessor;
  */
 class ZipArchiveProcessorFactory implements Factory
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'zip';
     }
@@ -25,11 +23,11 @@ class ZipArchiveProcessorFactory implements Factory
     /**
      * {@inheritdoc}
      */
-    public function create(ContainerBuilder $container, $id, array $config)
+    public function create(ContainerBuilder $container, string $id, array $config): Reference
     {
         $serviceId = sprintf('zenstruck_backup.processor.%s', $id);
 
-        $container->setDefinition($serviceId, new DefinitionDecorator('zenstruck_backup.processor.abstract_zip'))
+        $container->setDefinition($serviceId, new ChildDefinition('zenstruck_backup.processor.abstract_zip'))
             ->replaceArgument(0, $id)
             ->replaceArgument(1, $config['options'])
             ->replaceArgument(2, $config['timeout'])
@@ -47,7 +45,7 @@ class ZipArchiveProcessorFactory implements Factory
         $builder
             ->children()
                 ->scalarNode('options')->defaultValue(ZipArchiveProcessor::DEFAULT_OPTIONS)->end()
-                ->integerNode('timeout')->defaultValue(ZipArchiveProcessor::DEFAULT_TIMEOUT)->end()
+                ->integerNode('timeout')->defaultValue(ArchiveProcessor::DEFAULT_TIMEOUT)->end()
             ->end()
         ;
     }

@@ -2,10 +2,13 @@
 
 namespace Zenstruck\BackupBundle\Tests\Command;
 
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
 use Psr\Log\NullLogger;
 use Symfony\Bundle\FrameworkBundle\Console\Application as FrameworkApplication;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Zenstruck\Backup\Console\Command\ProfileActionCommand;
 use Zenstruck\Backup\Executor;
 use Zenstruck\Backup\ProfileRegistry;
@@ -13,16 +16,15 @@ use Zenstruck\Backup\ProfileRegistry;
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
  */
-abstract class ProfileActionCommandTest extends \PHPUnit_Framework_TestCase
+abstract class ProfileActionCommandTest extends TestCase
 {
     /**
      * @test
-     *
-     * @expectedException \RuntimeException
-     * @expectedExceptionMessage No profiles configured.
      */
     public function it_can_execute()
     {
+        $this->expectExceptionMessage("No profiles configured.");
+        $this->expectException(\RuntimeException::class);
         $registry = new ProfileRegistry();
         $executor = new Executor(new NullLogger());
 
@@ -50,26 +52,24 @@ abstract class ProfileActionCommandTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     *
-     * @expectedException \RuntimeException
-     * @expectedExceptionMessage Application must be instance of Symfony\Bundle\FrameworkBundle\Console\Application
      */
     public function it_fails_with_wrong_application()
     {
-        $application = new Application($this->createMock('Symfony\Component\DependencyInjection\ContainerInterface'));
+        $this->expectExceptionMessage("Application must be instance of Symfony\Bundle\FrameworkBundle\Console\Application");
+        $this->expectException(\RuntimeException::class);
+
+        # TODO is this Change correct ? Useful anymore?
+        /** @var ContainerInterface&MockObject $container */
+        $container = $this->createMock('Symfony\Component\DependencyInjection\ContainerInterface');
+
+        $application = new Application("avc");
         $application->add($this->createCommand());
 
         $tester = new CommandTester($application->find($this->getCommandName()));
         $tester->execute(array('command' => $this->getCommandName()));
     }
 
-    /**
-     * @return ProfileActionCommand
-     */
-    abstract protected function createCommand();
+    abstract protected function createCommand(): ProfileActionCommand;
 
-    /**
-     * @return string
-     */
-    abstract protected function getCommandName();
+    abstract protected function getCommandName(): string;
 }

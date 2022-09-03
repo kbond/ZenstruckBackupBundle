@@ -9,18 +9,12 @@ use Zenstruck\BackupBundle\Command\RunCommand;
  */
 class RunCommandTest extends ProfileActionCommandTest
 {
-    /**
-     * {@inheritdoc}
-     */
-    protected function createCommand()
+    protected function createCommand(): RunCommand
     {
         return new RunCommand();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function getCommandName()
+    protected function getCommandName(): string
     {
         return 'zenstruck:backup:run';
     }

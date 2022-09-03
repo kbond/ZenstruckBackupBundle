@@ -10,34 +10,22 @@ use Zenstruck\BackupBundle\DependencyInjection\Compiler\NamerCompilerPass;
  */
 class NamerCompilerPassTest extends RegisterCompilerPassTest
 {
-    /**
-     * {@inheritdoc}
-     */
-    protected function getRegistrarDefinitionName()
+    protected function getRegistrarDefinitionName(): string
     {
         return 'zenstruck_backup.profile_builder';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function getTagName()
+    protected function getTagName(): string
     {
         return 'zenstruck_backup.namer';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function getMethodName()
+    protected function getMethodName(): string
     {
         return 'addNamer';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function registerCompilerPass(ContainerBuilder $container)
+    protected function registerCompilerPass(ContainerBuilder $container): void
     {
         $container->addCompilerPass(new NamerCompilerPass());
     }

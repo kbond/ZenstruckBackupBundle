@@ -2,6 +2,7 @@
 
 namespace Zenstruck\BackupBundle\Tests\Command;
 
+use Zenstruck\Backup\Console\Command\ProfileActionCommand;
 use Zenstruck\BackupBundle\Command\ListCommand;
 
 /**
@@ -9,18 +10,12 @@ use Zenstruck\BackupBundle\Command\ListCommand;
  */
 class ListCommandTest extends ProfileActionCommandTest
 {
-    /**
-     * {@inheritdoc}
-     */
-    protected function createCommand()
+    protected function createCommand(): ListCommand|ProfileActionCommand
     {
         return new ListCommand();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function getCommandName()
+    protected function getCommandName(): string
     {
         return 'zenstruck:backup:list';
     }

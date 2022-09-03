@@ -1,8 +1,8 @@
 {
     "name": "zenstruck/backup-bundle",
-    "description": "Symfony2 Bundle that wraps backup commands",
-    "keywords": ["symfony2", "bundle", "backup"],
-    "homepage": "http://zenstruck.com/projects/ZenstruckBackupBundle",
+    "description": "Symfony Bundle that wraps backup commands",
+    "keywords": ["symfony", "bundle", "backup"],
+    "homepage": "https://zenstruck.com/projects/ZenstruckBackupBundle",
     "type": "symfony-bundle",
     "license": "MIT",
     "authors": [
@@ -12,15 +12,16 @@
         }
     ],
     "require": {
-        "zenstruck/backup": "^1.1.1",
-        "symfony/framework-bundle": "~2.3|~3.0"
+        "php": ">=8.0",
+        "zenstruck/backup": "dev-master#bacff4f",
+        "symfony/framework-bundle": "^5.4|^6.0"
     },
     "require-dev": {
-        "symfony/console": "~2.3|~3.0",
-        "symfony/yaml": "~2.3|~3.0",
-        "matthiasnoback/symfony-dependency-injection-test": "^1.1",
-        "sebastian/exporter": "^2.0",
-        "phpunit/phpunit": "^5.7"
+        "symfony/console": "^5.4|^6.0",
+        "symfony/yaml": "^5.4|^6.0",
+        "matthiasnoback/symfony-dependency-injection-test": "^4.3",
+        "sebastian/exporter": "^4.0",
+        "phpunit/phpunit": "^9.5"
     },
     "autoload": {
         "psr-4": { "Zenstruck\\BackupBundle\\": "src/" }

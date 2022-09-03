@@ -3,8 +3,8 @@
 namespace Zenstruck\BackupBundle\DependencyInjection\Factory\Namer;
 
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
+use Symfony\Component\DependencyInjection\ChildDefinition;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\DefinitionDecorator;
 use Symfony\Component\DependencyInjection\Reference;
 use Zenstruck\BackupBundle\DependencyInjection\Factory\Factory;
 use Zenstruck\Backup\Namer\TimestampNamer;
@@ -14,10 +14,7 @@ use Zenstruck\Backup\Namer\TimestampNamer;
  */
 class TimestampNamerFactory implements Factory
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'timestamp';
     }
@@ -25,11 +22,11 @@ class TimestampNamerFactory implements Factory
     /**
      * {@inheritdoc}
      */
-    public function create(ContainerBuilder $container, $id, array $config)
+    public function create(ContainerBuilder $container, string $id, array $config): Reference
     {
         $serviceId = sprintf('zenstruck_backup.namer.%s', $id);
 
-        $container->setDefinition($serviceId, new DefinitionDecorator('zenstruck_backup.namer.abstract_timestamp'))
+        $container->setDefinition($serviceId, new ChildDefinition('zenstruck_backup.namer.abstract_timestamp'))
             ->replaceArgument(0, $id)
             ->replaceArgument(1, $config['format'])
             ->replaceArgument(2, $config['prefix'])

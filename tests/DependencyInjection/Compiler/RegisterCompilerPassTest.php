@@ -32,18 +32,9 @@ abstract class RegisterCompilerPassTest extends AbstractCompilerPassTestCase
         );
     }
 
-    /**
-     * @return string
-     */
-    abstract protected function getRegistrarDefinitionName();
+    abstract protected function getRegistrarDefinitionName(): string;
 
-    /**
-     * @return string
-     */
-    abstract protected function getTagName();
+    abstract protected function getTagName(): string;
 
-    /**
-     * @return string
-     */
-    abstract protected function getMethodName();
+    abstract protected function getMethodName(): string;
 }

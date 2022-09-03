@@ -4,7 +4,7 @@ sources:
             database: my_database
     files:
         rsync:
-            source: "%kernel.root_dir%/../web/files"
+            source: "%kernel.project_dir%/public/files"
             additional_options:
                 - --exclude=_cache/
 namers:
@@ -32,13 +32,13 @@ destinations:
             directory: /foo
 profiles:
     daily:
-        scratch_dir: "%kernel.root_dir%/cache/backup"
+        scratch_dir: "%kernel.project_dir%/cache/backup"
         sources: [database, files]
         namer: daily
         processor: zip
         destinations: s3
     monthly:
-        scratch_dir: "%kernel.root_dir%/cache/backup"
+        scratch_dir: "%kernel.project_dir%/cache/backup"
         sources: files
         namer: daily
         processor: zip
