@@ -29,10 +29,5 @@
     },
     "autoload-dev": {
         "psr-4": { "Zenstruck\\BackupBundle\\Tests\\": "tests/" }
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "1.x-dev"
-        }
     }
 }
