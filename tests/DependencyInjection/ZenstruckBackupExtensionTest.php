@@ -4,6 +4,8 @@ namespace Zenstruck\BackupBundle\Tests\DependencyInjection;
 
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractExtensionTestCase;
 use Symfony\Component\Yaml\Yaml;
+use Zenstruck\BackupBundle\Command\ListCommand;
+use Zenstruck\BackupBundle\Command\RunCommand;
 use Zenstruck\BackupBundle\DependencyInjection\ZenstruckBackupExtension;
 
 /**
@@ -22,6 +24,10 @@ class ZenstruckBackupExtensionTest extends AbstractExtensionTestCase
         $this->assertContainerBuilderHasService('zenstruck_backup.profile_registry');
         $this->assertContainerBuilderHasService('zenstruck_backup.profile_builder');
         $this->assertContainerBuilderHasService('zenstruck_backup.executor');
+        $this->assertContainerBuilderHasService('zenstruck_backup.command.list', ListCommand::class);
+        $this->assertContainerBuilderHasServiceDefinitionWithTag('zenstruck_backup.command.list', 'console.command');
+        $this->assertContainerBuilderHasService('zenstruck_backup.command.run', RunCommand::class);
+        $this->assertContainerBuilderHasServiceDefinitionWithTag('zenstruck_backup.command.run', 'console.command');
     }
 
     /**
