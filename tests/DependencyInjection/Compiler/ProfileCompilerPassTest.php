@@ -25,9 +25,6 @@ class ProfileCompilerPassTest extends RegisterCompilerPassTest
         return 'add';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function registerCompilerPass(ContainerBuilder $container): void
     {
         $container->addCompilerPass(new ProfileCompilerPass());

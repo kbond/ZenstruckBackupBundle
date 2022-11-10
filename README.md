@@ -1,13 +1,5 @@
 # ZenstruckBackupBundle
 
-[![Build Status](http://img.shields.io/travis/kbond/ZenstruckBackupBundle.svg?style=flat-square)](https://travis-ci.org/kbond/ZenstruckBackupBundle)
-[![Scrutinizer Code Quality](http://img.shields.io/scrutinizer/g/kbond/ZenstruckBackupBundle.svg?style=flat-square)](https://scrutinizer-ci.com/g/kbond/ZenstruckBackupBundle/)
-[![Code Coverage](http://img.shields.io/scrutinizer/coverage/g/kbond/ZenstruckBackupBundle.svg?style=flat-square)](https://scrutinizer-ci.com/g/kbond/ZenstruckBackupBundle/)
-[![SensioLabs Insight](https://img.shields.io/sensiolabs/i/537700be-cb48-4bfd-9b77-356b1ad77cc3.svg?style=flat-square)](https://insight.sensiolabs.com/projects/537700be-cb48-4bfd-9b77-356b1ad77cc3)
-[![StyleCI](https://styleci.io/repos/18815669/shield)](https://styleci.io/repos/18815669)
-[![Latest Stable Version](http://img.shields.io/packagist/v/zenstruck/backup-bundle.svg?style=flat-square)](https://packagist.org/packages/zenstruck/backup-bundle)
-[![License](http://img.shields.io/packagist/l/zenstruck/backup-bundle.svg?style=flat-square)](https://packagist.org/packages/zenstruck/backup-bundle)
-
 This bundle allows creating and managing backups in a Symfony application. It is a wrapper for
 [zenstruck/backup](https://github.com/kbond/php-backup).
 

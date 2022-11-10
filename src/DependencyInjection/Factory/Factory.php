@@ -17,7 +17,7 @@ interface Factory
      * Creates the reference, registers it and returns a reference.
      *
      * @param ContainerBuilder $container A ContainerBuilder instance
-     * @param string $id        The id of the service
+     * @param string           $id        The id of the service
      * @param array            $config    An array of configuration
      */
     public function create(ContainerBuilder $container, string $id, array $config): Reference;

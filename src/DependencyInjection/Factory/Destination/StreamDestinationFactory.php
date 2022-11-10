@@ -18,12 +18,9 @@ class StreamDestinationFactory implements Factory
         return 'stream';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function create(ContainerBuilder $container, string $id, array $config): Reference
     {
-        $serviceId = sprintf('zenstruck_backup.destination.%s', $id);
+        $serviceId = \sprintf('zenstruck_backup.destination.%s', $id);
 
         $container->setDefinition($serviceId, new ChildDefinition('zenstruck_backup.destination.abstract_stream'))
             ->replaceArgument(0, $id)
@@ -34,9 +31,6 @@ class StreamDestinationFactory implements Factory
         return new Reference($serviceId);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function addConfiguration(ArrayNodeDefinition $builder)
     {
         $builder

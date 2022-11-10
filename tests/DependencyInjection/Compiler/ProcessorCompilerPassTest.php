@@ -25,9 +25,6 @@ class ProcessorCompilerPassTest extends RegisterCompilerPassTest
         return 'addProcessor';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function registerCompilerPass(ContainerBuilder $container): void
     {
         $container->addCompilerPass(new ProcessorCompilerPass());

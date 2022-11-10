@@ -13,7 +13,7 @@
     ],
     "require": {
         "php": ">=8.0",
-        "zenstruck/backup": "dev-master#bacff4f",
+        "zenstruck/backup": "^2.0",
         "symfony/framework-bundle": "^5.4|^6.0"
     },
     "require-dev": {
@@ -21,7 +21,8 @@
         "symfony/yaml": "^5.4|^6.0",
         "matthiasnoback/symfony-dependency-injection-test": "^4.3",
         "sebastian/exporter": "^4.0",
-        "phpunit/phpunit": "^9.5"
+        "phpunit/phpunit": "^9.5",
+        "symfony/phpunit-bridge": "^6.1"
     },
     "autoload": {
         "psr-4": { "Zenstruck\\BackupBundle\\": "src/" }

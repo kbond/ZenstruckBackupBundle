@@ -47,7 +47,6 @@ class ZenstruckBackupExtensionTest extends AbstractExtensionTestCase
 
     /**
      * @test
-     *
      * @dataProvider invalidConfigProvider
      */
     public function compile_with_invalid_config(string $file, string $message, string $expectedException)
@@ -75,6 +74,6 @@ class ZenstruckBackupExtensionTest extends AbstractExtensionTestCase
 
     private function loadConfig($file)
     {
-        return Yaml::parse(file_get_contents(__DIR__.'/../Fixtures/'.$file));
+        return Yaml::parse(\file_get_contents(__DIR__.'/../Fixtures/'.$file));
     }
 }

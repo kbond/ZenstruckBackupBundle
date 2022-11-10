@@ -13,9 +13,6 @@ use Zenstruck\Backup\Console\Helper\BackupHelper;
  */
 class ListCommand extends BaseListCommand
 {
-    /**
-     * {@inheritdoc}
-     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         /** @var Application $application */

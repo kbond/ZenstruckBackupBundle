@@ -31,46 +31,51 @@ class ZenstruckBackupExtension extends Extension
         $loader->load('sources.xml');
 
         $abstractProfile = $container->getDefinition('zenstruck_backup.abstract_profile');
-        $abstractProfile->setFactory(array(new Reference('zenstruck_backup.profile_builder'), 'create'));
+        $abstractProfile->setFactory([new Reference('zenstruck_backup.profile_builder'), 'create']);
 
         $container->setDefinition('zenstruck_backup.abstract_profile', $abstractProfile);
 
         foreach ($config['sources'] as $name => $source) {
-            reset($source);
+            \reset($source);
 
             $configuration
-                ->getSourceFactory(key($source))
-                ->create($container, $name, reset($source));
+                ->getSourceFactory(\key($source))
+                ->create($container, $name, \reset($source))
+            ;
         }
 
         foreach ($config['namers'] as $name => $namer) {
-            reset($namer);
+            \reset($namer);
 
             $configuration
-                ->getNamerFactory(key($namer))
-                ->create($container, $name, reset($namer));
+                ->getNamerFactory(\key($namer))
+                ->create($container, $name, \reset($namer))
+            ;
         }
 
         foreach ($config['processors'] as $name => $processor) {
-            reset($processor);
+            \reset($processor);
 
             $configuration
-                ->getProcessorFactory(key($processor))
-                ->create($container, $name, reset($processor));
+                ->getProcessorFactory(\key($processor))
+                ->create($container, $name, \reset($processor))
+            ;
         }
 
         foreach ($config['destinations'] as $name => $destination) {
-            reset($destination);
+            \reset($destination);
 
             $configuration
-                ->getDestinationFactory(key($destination))
-                ->create($container, $name, reset($destination));
+                ->getDestinationFactory(\key($destination))
+                ->create($container, $name, \reset($destination))
+            ;
         }
 
         foreach ($config['profiles'] as $name => $profile) {
             $definition = $container->setDefinition(
-                sprintf('zenstruck_backup.profile.%s', $name),
-                new ChildDefinition('zenstruck_backup.abstract_profile'));
+                \sprintf('zenstruck_backup.profile.%s', $name),
+                new ChildDefinition('zenstruck_backup.abstract_profile')
+            );
 
             $definition
                 ->replaceArgument(0, $name)
@@ -79,7 +84,8 @@ class ZenstruckBackupExtension extends Extension
                 ->replaceArgument(3, $profile['namer'])
                 ->replaceArgument(4, $profile['sources'])
                 ->replaceArgument(5, $profile['destinations'])
-                ->addTag('zenstruck_backup.profile');
+                ->addTag('zenstruck_backup.profile')
+            ;
         }
     }
 
@@ -103,14 +109,15 @@ class ZenstruckBackupExtension extends Extension
 
     /**
      * @return Factory[]
+     *
      * @throws \Exception
      * @throws \Exception
      */
     private function getServices(string $tag, ContainerBuilder $container): array
     {
-        $services = array();
+        $services = [];
 
-        foreach (array_keys($container->findTaggedServiceIds($tag)) as $id) {
+        foreach (\array_keys($container->findTaggedServiceIds($tag)) as $id) {
             /** @var Factory $factory */
             $factory = $container->get($id);
 

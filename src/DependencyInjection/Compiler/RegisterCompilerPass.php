@@ -11,9 +11,6 @@ use Symfony\Component\DependencyInjection\Reference;
  */
 abstract class RegisterCompilerPass implements CompilerPassInterface
 {
-    /**
-     * {@inheritdoc}
-     */
     final public function process(ContainerBuilder $container)
     {
         $definitionName = $this->getDefinitionName();
@@ -25,8 +22,8 @@ abstract class RegisterCompilerPass implements CompilerPassInterface
         $definition = $container->getDefinition($definitionName);
         $taggedServices = $container->findTaggedServiceIds($this->getTagName());
 
-        foreach (array_keys($taggedServices) as $id) {
-            $definition->addMethodCall($this->getMethodName(), array(new Reference($id)));
+        foreach (\array_keys($taggedServices) as $id) {
+            $definition->addMethodCall($this->getMethodName(), [new Reference($id)]);
         }
     }
 

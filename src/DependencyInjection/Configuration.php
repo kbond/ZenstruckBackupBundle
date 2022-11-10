@@ -18,11 +18,12 @@ class Configuration implements ConfigurationInterface
      * @param Factory[] $sourceFactories
      * @param Factory[] $destinationFactories
      */
-    public function __construct(private array $namerFactories,
-                                private array $processorFactories,
-                                private array $sourceFactories,
-                                private array $destinationFactories)
-    {
+    public function __construct(
+        private array $namerFactories,
+        private array $processorFactories,
+        private array $sourceFactories,
+        private array $destinationFactories
+    ) {
     }
 
     public function getConfigTreeBuilder(): TreeBuilder
@@ -48,9 +49,7 @@ class Configuration implements ConfigurationInterface
                                 ->prototype('scalar')->end()
                                 ->beforeNormalization()
                                     ->ifString()
-                                    ->then(function ($v) {
-                                        return array($v);
-                                    })
+                                    ->then(fn($v) => [$v])
                                 ->end()
                             ->end()
                             ->scalarNode('namer')->isRequired()->end()
@@ -61,9 +60,7 @@ class Configuration implements ConfigurationInterface
                                 ->prototype('scalar')->end()
                                 ->beforeNormalization()
                                     ->ifString()
-                                    ->then(function ($v) {
-                                        return array($v);
-                                    })
+                                    ->then(fn($v) => [$v])
                                 ->end()
                             ->end()
                         ->end()
@@ -96,7 +93,7 @@ class Configuration implements ConfigurationInterface
     }
 
     /**
-     * @param Factory[]           $factories
+     * @param Factory[] $factories
      */
     private function addFactories(ArrayNodeDefinition $node, string $plural, string $singular, array $factories)
     {
@@ -107,10 +104,8 @@ class Configuration implements ConfigurationInterface
                     ->prototype('array')
                         ->canBeUnset()
                         ->validate()
-                            ->ifTrue(function ($v) {
-                                return count($v) > 1;
-                            })
-                            ->thenInvalid(sprintf('Can only have 1 %s per configuration.', $singular))
+                            ->ifTrue(fn($v) => \count($v) > 1)
+                            ->thenInvalid(\sprintf('Can only have 1 %s per configuration.', $singular))
                         ->end()
                         ->children()
         ;

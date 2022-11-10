@@ -25,9 +25,6 @@ class DestinationCompilerPassTest extends RegisterCompilerPassTest
         return 'addDestination';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function registerCompilerPass(ContainerBuilder $container): void
     {
         $container->addCompilerPass(new DestinationCompilerPass());

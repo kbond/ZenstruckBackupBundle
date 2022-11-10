@@ -25,9 +25,6 @@ class SourceCompilerPassTest extends RegisterCompilerPassTest
         return 'addSource';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function registerCompilerPass(ContainerBuilder $container): void
     {
         $container->addCompilerPass(new SourceCompilerPass());

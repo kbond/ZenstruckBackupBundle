@@ -7,8 +7,8 @@ use Symfony\Component\DependencyInjection\ChildDefinition;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 use Zenstruck\Backup\Processor\ArchiveProcessor;
-use Zenstruck\BackupBundle\DependencyInjection\Factory\Factory;
 use Zenstruck\Backup\Processor\ZipArchiveProcessor;
+use Zenstruck\BackupBundle\DependencyInjection\Factory\Factory;
 
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
@@ -20,12 +20,9 @@ class ZipArchiveProcessorFactory implements Factory
         return 'zip';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function create(ContainerBuilder $container, string $id, array $config): Reference
     {
-        $serviceId = sprintf('zenstruck_backup.processor.%s', $id);
+        $serviceId = \sprintf('zenstruck_backup.processor.%s', $id);
 
         $container->setDefinition($serviceId, new ChildDefinition('zenstruck_backup.processor.abstract_zip'))
             ->replaceArgument(0, $id)
@@ -37,9 +34,6 @@ class ZipArchiveProcessorFactory implements Factory
         return new Reference($serviceId);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function addConfiguration(ArrayNodeDefinition $builder)
     {
         $builder

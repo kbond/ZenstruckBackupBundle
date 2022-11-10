@@ -6,8 +6,8 @@ use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\DependencyInjection\ChildDefinition;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
-use Zenstruck\BackupBundle\DependencyInjection\Factory\Factory;
 use Zenstruck\Backup\Source\MySqlDumpSource;
+use Zenstruck\BackupBundle\DependencyInjection\Factory\Factory;
 
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
@@ -19,12 +19,9 @@ class MySqlDumpSourceFactory implements Factory
         return 'mysqldump';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function create(ContainerBuilder $container, string $id, array $config): Reference
     {
-        $serviceId = sprintf('zenstruck_backup.source.%s', $id);
+        $serviceId = \sprintf('zenstruck_backup.source.%s', $id);
 
         $container->setDefinition($serviceId, new ChildDefinition('zenstruck_backup.source.abstract_mysqldump'))
             ->replaceArgument(0, $id)
@@ -42,9 +39,6 @@ class MySqlDumpSourceFactory implements Factory
         return new Reference($serviceId);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function addConfiguration(ArrayNodeDefinition $builder)
     {
         $builder

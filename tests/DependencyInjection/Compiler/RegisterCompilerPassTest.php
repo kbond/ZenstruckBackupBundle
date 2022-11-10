@@ -28,7 +28,7 @@ abstract class RegisterCompilerPassTest extends AbstractCompilerPassTestCase
         $this->assertContainerBuilderHasServiceDefinitionWithMethodCall(
             $this->getRegistrarDefinitionName(),
             $this->getMethodName(),
-            array(new Reference('my_service'))
+            [new Reference('my_service')]
         );
     }
 

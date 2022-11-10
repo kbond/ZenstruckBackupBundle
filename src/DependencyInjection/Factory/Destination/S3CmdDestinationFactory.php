@@ -6,8 +6,8 @@ use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\DependencyInjection\ChildDefinition;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
-use Zenstruck\BackupBundle\DependencyInjection\Factory\Factory;
 use Zenstruck\Backup\Destination\S3CmdDestination;
+use Zenstruck\BackupBundle\DependencyInjection\Factory\Factory;
 
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
@@ -19,12 +19,9 @@ class S3CmdDestinationFactory implements Factory
         return 's3cmd';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function create(ContainerBuilder $container, string $id, array $config): Reference
     {
-        $serviceId = sprintf('zenstruck_backup.destination.%s', $id);
+        $serviceId = \sprintf('zenstruck_backup.destination.%s', $id);
 
         $container->setDefinition($serviceId, new ChildDefinition('zenstruck_backup.destination.abstract_s3cmd'))
             ->replaceArgument(0, $id)
@@ -37,9 +34,6 @@ class S3CmdDestinationFactory implements Factory
         return new Reference($serviceId);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function addConfiguration(ArrayNodeDefinition $builder)
     {
         $builder

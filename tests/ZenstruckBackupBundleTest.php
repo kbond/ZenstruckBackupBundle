@@ -22,8 +22,9 @@ class ZenstruckBackupBundleTest extends TestCase
     {
         $container = $this
             ->getMockBuilder('Symfony\Component\DependencyInjection\ContainerBuilder')
-            ->setMethods(array('addCompilerPass'))
-            ->getMock();
+            ->setMethods(['addCompilerPass'])
+            ->getMock()
+        ;
 
         $container
             ->expects($this->exactly(5))
@@ -34,7 +35,8 @@ class ZenstruckBackupBundleTest extends TestCase
                 [$this->isInstanceOf(SourceCompilerPass::class)],
                 [$this->isInstanceOf(ProcessorCompilerPass::class)],
                 [$this->isInstanceOf(NamerCompilerPass::class)]
-            );
+            )
+        ;
 
         $bundle = new ZenstruckBackupBundle();
         $bundle->build($container);
