@@ -16,7 +16,7 @@ class RunCommand extends BaseRunCommand
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         /** @var Application $application */
         $application = $this->getApplication();
@@ -32,6 +32,6 @@ class RunCommand extends BaseRunCommand
             $container->get('zenstruck_backup.executor')
         ));
 
-        parent::execute($input, $output);
+        return parent::execute($input, $output);
     }
 }

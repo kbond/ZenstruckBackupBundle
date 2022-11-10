@@ -13,23 +13,21 @@ This bundle allows creating and managing backups in a Symfony application. It is
 
 ## Installation
 
-Require this bundle with composer:
+1. Install with composer:
 
-    composer require zenstruck/backup-bundle
+        $ composer require zenstruck/backup-bundle
 
-Then enable it in your kernel:
+2. Enable the bundle:
+   This Step is only needed if you are not using [Symfony Flex](https://symfony.com/doc/current/setup/flex.html).
 
-```php
-// app/AppKernel.php
-public function registerBundles()
-{
-    $bundles = array(
-        //...
-        new Zenstruck\BackupBundle\ZenstruckBackupBundle(),
-        //...
-    );
-}
-```
+    ```php
+    // config/bundles.php
+
+    return [
+            // ...
+            Zenstruck\BackupBundle\ZenstruckBackupBundle::class => ['all' => true],
+        ];
+    ```
 
 ## Configuration
 
@@ -45,7 +43,7 @@ zenstruck_backup:
                 database: my_database
         files:
             rsync:
-                source: "%kernel.root_dir%/../web/files"
+                source: "%kernel.project_dir%/public/files"
                 additional_options:
                     - --exclude=_cache/
     namers:
@@ -64,7 +62,7 @@ zenstruck_backup:
                 bucket: "s3://foobar/backups"
     profiles:
         daily:
-            scratch_dir: "%kernel.root_dir%/cache/backup"
+            scratch_dir: "%kernel.project_dir%/cache/backup"
             sources: [database, files]
             namer: daily
             processor: zip
@@ -89,18 +87,18 @@ Options:
 **NOTES**:
 
 1. Add `-vv` to see the log.
-2. For long running backups, it may be required to increase the `memory_limit` in your `app/console`/`bin/console`.
+2. For long running backups, it may be required to increase the `memory_limit` in your `bin/console`.
 3. Running the command without a profile will list available profiles.
 
 Examples (with the above configuration):
 
 * Create a backup at: `s3://foobar/backups/mysite-{day-of-month}`
 
-        app/console zenstruck:backup:run daily
+        bin/console zenstruck:backup:run daily
 
 * Create a backup at: `s3://foobar/backups/mysite-{YYYYMMDDHHMMSS}`
 
-        app/console zenstruck:backup:run snapshot
+        bin/console zenstruck:backup:run snapshot
 
 ### List Existing Backups
 

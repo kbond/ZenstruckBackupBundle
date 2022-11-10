@@ -50,26 +50,27 @@ class ZenstruckBackupExtensionTest extends AbstractExtensionTestCase
      *
      * @dataProvider invalidConfigProvider
      */
-    public function compile_with_invalid_config($file, $message, $expectedException)
+    public function compile_with_invalid_config(string $file, string $message, string $expectedException)
     {
-        $this->setExpectedException($expectedException, $message);
+        $this->expectException($expectedException);
+        $this->expectExceptionMessage($message);
 
         $this->load($this->loadConfig($file));
         $this->compile();
     }
 
-    public static function invalidConfigProvider()
+    public static function invalidConfigProvider(): array
     {
-        return array(
-            array('invalid_profile_missing_sources.yml', 'The child node "sources" at path "zenstruck_backup.profiles.daily" must be configured.', 'Symfony\Component\Config\Definition\Exception\InvalidConfigurationException'),
-            array('invalid_profile_missing_namer.yml', 'The child node "namer" at path "zenstruck_backup.profiles.daily" must be configured.', 'Symfony\Component\Config\Definition\Exception\InvalidConfigurationException'),
-            array('invalid_profile_missing_destinations.yml', 'The child node "destinations" at path "zenstruck_backup.profiles.daily" must be configured.', 'Symfony\Component\Config\Definition\Exception\InvalidConfigurationException'),
-        );
+        return [
+            ['invalid_profile_missing_sources.yml', 'The child config "sources" under "zenstruck_backup.profiles.daily" must be configured.', 'Symfony\Component\Config\Definition\Exception\InvalidConfigurationException'],
+            ['invalid_profile_missing_namer.yml', 'The child config "namer" under "zenstruck_backup.profiles.daily" must be configured.', 'Symfony\Component\Config\Definition\Exception\InvalidConfigurationException'],
+            ['invalid_profile_missing_destinations.yml', 'The child config "destinations" under "zenstruck_backup.profiles.daily" must be configured.', 'Symfony\Component\Config\Definition\Exception\InvalidConfigurationException'],
+        ];
     }
 
-    protected function getContainerExtensions()
+    protected function getContainerExtensions(): array
     {
-        return array(new ZenstruckBackupExtension());
+        return [new ZenstruckBackupExtension()];
     }
 
     private function loadConfig($file)

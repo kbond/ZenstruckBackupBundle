@@ -1,6 +1,6 @@
 profiles:
     daily:
-        scratch_dir: "%kernel.root_dir%/cache/backup"
+        scratch_dir: "%kernel.project_dir%/cache/backup"
         namer: daily
         processor: zip
         destinations: s3

@@ -7,26 +7,17 @@ namespace Zenstruck\BackupBundle\DependencyInjection\Compiler;
  */
 class ProfileCompilerPass extends RegisterCompilerPass
 {
-    /**
-     * {@inheritdoc}
-     */
-    protected function getDefinitionName()
+    protected function getDefinitionName(): string
     {
         return 'zenstruck_backup.profile_registry';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function getTagName()
+    protected function getTagName(): string
     {
         return 'zenstruck_backup.profile';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function getMethodName()
+    protected function getMethodName(): string
     {
         return 'add';
     }

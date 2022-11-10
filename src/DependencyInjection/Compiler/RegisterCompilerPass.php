@@ -30,18 +30,9 @@ abstract class RegisterCompilerPass implements CompilerPassInterface
         }
     }
 
-    /**
-     * @return string
-     */
-    abstract protected function getDefinitionName();
+    abstract protected function getDefinitionName(): string;
 
-    /**
-     * @return string
-     */
-    abstract protected function getTagName();
+    abstract protected function getTagName(): string;
 
-    /**
-     * @return string
-     */
-    abstract protected function getMethodName();
+    abstract protected function getMethodName(): string;
 }

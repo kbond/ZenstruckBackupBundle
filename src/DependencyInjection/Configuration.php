@@ -12,29 +12,23 @@ use Zenstruck\BackupBundle\DependencyInjection\Factory\Factory;
  */
 class Configuration implements ConfigurationInterface
 {
-    private $namerFactories;
-    private $processorFactories;
-    private $sourceFactories;
-    private $destinationFactories;
-
     /**
      * @param Factory[] $namerFactories
      * @param Factory[] $processorFactories
      * @param Factory[] $sourceFactories
      * @param Factory[] $destinationFactories
      */
-    public function __construct(array $namerFactories, array $processorFactories, array $sourceFactories, array $destinationFactories)
+    public function __construct(private array $namerFactories,
+                                private array $processorFactories,
+                                private array $sourceFactories,
+                                private array $destinationFactories)
     {
-        $this->namerFactories = $namerFactories;
-        $this->processorFactories = $processorFactories;
-        $this->sourceFactories = $sourceFactories;
-        $this->destinationFactories = $destinationFactories;
     }
 
-    public function getConfigTreeBuilder()
+    public function getConfigTreeBuilder(): TreeBuilder
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('zenstruck_backup');
+        $treeBuilder = new TreeBuilder('zenstruck_backup');
+        $rootNode = $treeBuilder->getRootNode();
 
         $this->addFactories($rootNode, 'namers', 'namer', $this->namerFactories);
         $this->addFactories($rootNode, 'processors', 'processor', $this->processorFactories);
@@ -81,53 +75,30 @@ class Configuration implements ConfigurationInterface
         return $treeBuilder;
     }
 
-    /**
-     * @param string $id
-     *
-     * @return Factory
-     */
-    public function getSourceFactory($id)
+    public function getSourceFactory(string $id): Factory
     {
         return $this->sourceFactories[$id];
     }
 
-    /**
-     * @param string $id
-     *
-     * @return Factory
-     */
-    public function getNamerFactory($id)
+    public function getNamerFactory(string $id): Factory
     {
         return $this->namerFactories[$id];
     }
 
-    /**
-     * @param string $id
-     *
-     * @return Factory
-     */
-    public function getDestinationFactory($id)
+    public function getDestinationFactory(string $id): Factory
     {
         return $this->destinationFactories[$id];
     }
 
-    /**
-     * @param string $id
-     *
-     * @return Factory
-     */
-    public function getProcessorFactory($id)
+    public function getProcessorFactory(string $id): Factory
     {
         return $this->processorFactories[$id];
     }
 
     /**
-     * @param ArrayNodeDefinition $node
-     * @param string              $plural
-     * @param string              $singular
      * @param Factory[]           $factories
      */
-    private function addFactories(ArrayNodeDefinition $node, $plural, $singular, array $factories)
+    private function addFactories(ArrayNodeDefinition $node, string $plural, string $singular, array $factories)
     {
         $nodeBuilder = $node
             ->children()

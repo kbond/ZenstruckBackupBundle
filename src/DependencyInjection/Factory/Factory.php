@@ -11,26 +11,19 @@ use Symfony\Component\DependencyInjection\Reference;
  */
 interface Factory
 {
-    /**
-     * @return string
-     */
-    public function getName();
+    public function getName(): string;
 
     /**
      * Creates the reference, registers it and returns a reference.
      *
      * @param ContainerBuilder $container A ContainerBuilder instance
-     * @param string           $id        The id of the service
+     * @param string $id        The id of the service
      * @param array            $config    An array of configuration
-     *
-     * @return Reference
      */
-    public function create(ContainerBuilder $container, $id, array $config);
+    public function create(ContainerBuilder $container, string $id, array $config): Reference;
 
     /**
      * Adds configuration nodes for the factory.
-     *
-     * @param ArrayNodeDefinition $builder
      */
     public function addConfiguration(ArrayNodeDefinition $builder);
 }
