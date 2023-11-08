@@ -15,7 +15,7 @@ use Zenstruck\BackupBundle\DependencyInjection\Compiler\SourceCompilerPass;
  */
 class ZenstruckBackupBundle extends Bundle
 {
-    public function build(ContainerBuilder $container)
+    public function build(ContainerBuilder $container): void
     {
         $container->addCompilerPass(new ProfileCompilerPass());
         $container->addCompilerPass(new DestinationCompilerPass());

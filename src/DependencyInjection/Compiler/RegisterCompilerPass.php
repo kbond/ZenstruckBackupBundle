@@ -11,7 +11,7 @@ use Symfony\Component\DependencyInjection\Reference;
  */
 abstract class RegisterCompilerPass implements CompilerPassInterface
 {
-    final public function process(ContainerBuilder $container)
+    final public function process(ContainerBuilder $container): void
     {
         $definitionName = $this->getDefinitionName();
 

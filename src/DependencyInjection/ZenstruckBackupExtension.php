@@ -18,7 +18,7 @@ class ZenstruckBackupExtension extends Extension
     /**
      * @noinspection PhpUnhandledExceptionInspection
      */
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $configuration = $this->getConfiguration($configs, $container);
         $config = $this->processConfiguration($configuration, $configs);
