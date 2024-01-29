@@ -7,7 +7,9 @@ This bundle allows creating and managing backups in a Symfony application. It is
 
 1. Install with composer:
 
-        $ composer require zenstruck/backup-bundle
+```bash
+composer require zenstruck/backup-bundle
+```
 
 2. Enable the bundle:
    This Step is only needed if you are not using [Symfony Flex](https://symfony.com/doc/current/setup/flex.html).
@@ -23,7 +25,7 @@ This bundle allows creating and managing backups in a Symfony application. It is
 
 ## Configuration
 
-In your `config.yml` add at least one source, namer, processor, and destination as well as a profile.
+In your `config/packages/zenstruck_backup.yaml` add at least one source, namer, processor, and destination as well as a profile.
 
 Example:
 
