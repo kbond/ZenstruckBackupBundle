@@ -23,7 +23,7 @@ return $config
         'native_function_invocation' => ['include' => ['@internal']],
         'explicit_indirect_variable' => true,
         'explicit_string_variable' => true,
-        'escape_implicit_backslashes' => true,
+        'string_implicit_backslashes' => true,
         'mb_str_functions' => true,
         'logical_operators' => true,
         'php_unit_method_casing' => ['case' => 'snake_case'],

@@ -8,50 +8,10 @@ on:
 
 jobs:
   tests:
-    name: PHP ${{ matrix.php }}, SF ${{ matrix.symfony }} - ${{ matrix.deps }}
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        php: [8.3]
-        deps: [highest]
-        symfony: [7.0.*]
-        include:
-          - php: 8.0
-            deps: lowest
-            symfony: '*'
-          - php: 8.0
-            symfony: '5.4.*'
-          - php: 8.1
-            symfony: '5.4.*'
-          - php: 8.2
-            symfony: '5.4.*'
-          - php: 8.3
-            symfony: '5.4.*'
-          - php: 8.1
-            symfony: '6.4.*'
-          - php: 8.2
-            symfony: '6.4.*'
-          - php: 8.3
-            symfony: '6.4.*'
-          - php: 8.2
-            symfony: '7.0.*'
-          - php: 8.3
-            symfony: '7.0.*'
-
-    steps:
-      - uses: zenstruck/.github@php-test-symfony
-        with:
-          php: ${{ matrix.php }}
-          deps: ${{ matrix.deps }}
-          symfony: ${{ matrix.symfony }}
+    uses: zenstruck/.github/.github/workflows/php-test-symfony.yml@main
 
   code-coverage:
-    name: Code Coverage
-    runs-on: ubuntu-latest
-    steps:
-      - uses: zenstruck/.github@php-coverage-codecov
-        with:
-          php: 8.1
+    uses: zenstruck/.github/.github/workflows/php-coverage-codecov.yml@main
 
   composer-validate:
     uses: zenstruck/.github/.github/workflows/php-composer-validate.yml@main

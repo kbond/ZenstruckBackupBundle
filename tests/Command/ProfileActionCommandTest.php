@@ -58,7 +58,7 @@ abstract class ProfileActionCommandTest extends TestCase
      */
     public function it_fails_with_wrong_application()
     {
-        $this->expectExceptionMessage('Application must be instance of Symfony\\Bundle\\FrameworkBundle\\Console\\Application');
+        $this->expectExceptionMessage('Application must be instance of Symfony\Bundle\FrameworkBundle\Console\Application');
         $this->expectException(\RuntimeException::class);
 
         // TODO is this Change correct ? Useful anymore?

@@ -13,7 +13,7 @@
     ],
     "require": {
         "php": ">=8.0",
-        "zenstruck/backup": "^2.0 @dev",
+        "zenstruck/backup": "^2.0",
         "symfony/framework-bundle": "^5.4|^6.0|^7.0"
     },
     "require-dev": {
@@ -28,5 +28,7 @@
     },
     "autoload-dev": {
         "psr-4": { "Zenstruck\\BackupBundle\\Tests\\": "tests/" }
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
